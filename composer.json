@@ -1,0 +1,55 @@
+{
+    "name": "rougin/credo",
+    "description": "Integrates Doctrine to CodeIgniter with ease",
+    "keywords": [
+        "builder",
+        "codeigniter",
+        "credo",
+        "doctrine",
+        "php",
+        "query"
+    ],
+    "homepage": "https://github.com/rougin/credo",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rougin Royce Gutib",
+            "email": "rougingutib@gmail.com",
+            "homepage": "http://rougin.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.4.0"
+    },
+    "require-dev": {
+        "doctrine/orm": "^2.5",
+        "phpunit/phpunit" : "4.*",
+        "rougin/codeigniter": "^0.1.2",
+        "rougin/spark-plug": "^0.4.1",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rougin\\Credo\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rougin\\Credo\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    },
+    "suggest": {
+        "rougin/codeigniter": "Installs CodeIgniter core through Composer",
+        "rougin/combustor": "Lets you generate controllers, models, and views from database tables for CodeIgniter",
+        "rougin/refinery": "\"Ready-to-eat\" migrations for CodeIgniter"
+    }
+}
