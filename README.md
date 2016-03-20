@@ -19,15 +19,28 @@ $ composer require rougin/credo
 
 ## Usage
 
-**models/User.php**
+**application/models/User.php**
 
 ``` php
+/**
+ * @Entity
+ * @Table(name="user")
+ */
 class User extends CI_Model {
-	// Properties and other stuff...
+
+    /**
+     * @Id @GeneratedValue
+     * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)
+     * @var integer
+     */
+    protected $_id;
+
+    // ...
+
 }
 ```
 
-**controllers/Welcome.php**
+**application/controllers/Welcome.php**
 
 ``` php
 $this->load->model('user');
@@ -42,6 +55,8 @@ $user = $repository->find(4);
 
 Extend `Rougin\Credo\Loader` to your `MY_Loader`.
 
+**application/core/Welcome.php**
+
 ``` php
 class MY_Loader extends Rougin\Credo\Loader {}
 ```
@@ -50,17 +65,17 @@ You can now load a repository by using `$this->load->repository($repositoryName)
 
 Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_repository`)
 
-**repositories/User_repository.php**
+**application/repositories/User_repository.php**
 
 ``` php
 class User_repository extends Rougin\Credo\EntityRepository {
-	// Other stuff...
+    // Other stuff...
 }
 ```
 
 **NOTE**: Extending your repository to `Rougin\Credo\EntityRepository` enables you to call its methods in underscore case. (e.g. `find_all`, `find_by`)
 
-**controllers/Welcome.php**
+**application/controllers/Welcome.php**
 
 ``` php
 $this->load->model('user');
