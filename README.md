@@ -53,15 +53,13 @@ $user = $repository->find(4);
 
 ### Using `EntityRepository`
 
-Extend `Rougin\Credo\Loader` to your `MY_Loader`.
+Extend `Rougin\Credo\Loader` to `MY_Loader`.
 
-**application/core/Welcome.php**
+**application/core/MY_Loader.php**
 
 ``` php
 class MY_Loader extends Rougin\Credo\Loader {}
 ```
-
-You can now load a repository by using `$this->load->repository($repositoryName)`.
 
 Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_repository`)
 
@@ -74,6 +72,8 @@ class User_repository extends Rougin\Credo\EntityRepository {
 ```
 
 **NOTE**: Extending your repository to `Rougin\Credo\EntityRepository` enables you to call its methods in underscore case. (e.g. `find_all`, `find_by`)
+
+You can now load a repository by using `$this->load->repository($repositoryName)`.
 
 **application/controllers/Welcome.php**
 
