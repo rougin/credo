@@ -100,7 +100,7 @@ class Credo
      * @param  mixed  $parameters
      * @return mixed
      */
-    function __call($method, $parameters) {
+    public function __call($method, $parameters) {
         $method = Inflector::camelize($method);
         $result = $this;
 

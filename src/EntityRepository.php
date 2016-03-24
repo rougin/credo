@@ -20,16 +20,15 @@ class EntityRepository extends BaseEntityRepository
      * @param  mixed  $parameters
      * @return mixed
      */
-    function __call($method, $parameters) {
+    public function __call($method, $parameters) {
         $method = Inflector::camelize($method);
-        $result = $this;
 
         if (method_exists($this, $method)) {
             $class = [$this, $method];
             
-            $result = call_user_func_array($class, $parameters);
+            return call_user_func_array($class, $parameters);
         }
 
-        return $result;
+        return $this;
     }
 }

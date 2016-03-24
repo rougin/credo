@@ -78,4 +78,19 @@ class CredoTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('User_repository', $repository);
         $this->assertCount($this->expectedRows, $users);
     }
+
+    /**
+     * Tests methods that does not belong to EntityManager.
+     * 
+     * @return void
+     */
+    public function testMethodNotFound()
+    {
+        $credo = new Credo($this->ci->db);
+
+        $repository = $credo->get_repository('User');
+        $users = $repository->find_all_foo();
+
+        $this->assertInstanceOf('User_repository', $repository);
+    }
 }
