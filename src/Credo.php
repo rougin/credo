@@ -29,11 +29,14 @@ class Credo
      */
     public function __construct($database = null)
     {
+        $ci = null;
+
         // Loads the database configuration from CodeIgniter
         if (empty($database)) {
             $ci = Instance::create();
 
             $ci->load->database();
+
             $database = $ci->db;
         }
 
@@ -50,7 +53,7 @@ class Credo
         // Set $ci->db->db_debug to TRUE to disable caching while you develop
         $config = Setup::createAnnotationMetadataConfiguration(
             $directories,
-            $ci->db->db_debug,
+            ($ci) ? $ci->db->db_debug : $database->db_debug,
             APPPATH . 'models/proxies'
         );
 

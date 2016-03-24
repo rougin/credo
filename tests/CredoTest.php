@@ -53,6 +53,16 @@ class CredoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(class_exists('User_repository'));
     }
 
+    public function testCredo()
+    {
+        $credo = new Credo;
+
+        $repository = $credo->get_repository('User');
+        $users = $repository->find_all();
+
+        $this->assertCount($this->expectedRows, $users);
+    }
+
     /**
      * Tests EntityManager methods in underscore case.
      * 
@@ -60,7 +70,7 @@ class CredoTest extends PHPUnit_Framework_TestCase
      */
     public function testUnderscoreMethods()
     {
-        $credo = new Credo;
+        $credo = new Credo($this->ci->db);
 
         $repository = $credo->get_repository('User');
         $users = $repository->find_all();
