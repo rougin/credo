@@ -2,6 +2,11 @@
 
 All notable changes to `Credo` will be documented in this file.
 
+## [0.1.2](https://github.com/rougin/credo/compare/v0.1.0...v0.1.2) - 2016-05-15
+
+### Changed
+- Version of `rougin/codeigniter` to `^3.0.0`
+
 ## [0.1.1](https://github.com/rougin/describe/compare/v0.1.0...v0.1.1) - 2015-03-24
 
 ### Changed
