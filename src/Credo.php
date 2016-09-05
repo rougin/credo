@@ -13,7 +13,7 @@ use Rougin\SparkPlug\Instance;
  * Credo
  *
  * Integrates Doctrine to CodeIgniter with ease.
- * 
+ *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
@@ -62,16 +62,16 @@ class Credo
 
     /**
      * Sets up the database configuration from CodeIgniter.
-     * 
+     *
      * @param  CI_DB $database
      * @return array
      */
     private function setDatabaseConnection($database)
     {
         $driver = $database->dbdriver;
-        $dsn = $database->dsn;
+        $dsn    = $database->dsn;
 
-        if ($driver == 'pdo' && strpos($dsn, ':') !== FALSE) {
+        if ($driver == 'pdo' && strpos($dsn, ':') !== false) {
             $keys = explode(':', $dsn);
             $driver .= '_' . $keys[0];
         }
@@ -95,12 +95,13 @@ class Credo
 
     /**
      * Calls methods from EntityManager in underscore case.
-     * 
+     *
      * @param  string $method
      * @param  mixed  $parameters
      * @return mixed
      */
-    public function __call($method, $parameters) {
+    public function __call($method, $parameters)
+    {
         $method = Inflector::camelize($method);
         $result = $this;
 

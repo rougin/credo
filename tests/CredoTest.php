@@ -42,7 +42,7 @@ class CredoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests the $this->load->repository functionality.
-     * 
+     *
      * @return void
      */
     public function testLoadRepository()
@@ -65,7 +65,7 @@ class CredoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests EntityManager methods in underscore case.
-     * 
+     *
      * @return void
      */
     public function testUnderscoreMethods()
@@ -81,7 +81,7 @@ class CredoTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests methods that does not belong to EntityManager.
-     * 
+     *
      * @return void
      */
     public function testMethodNotFound()

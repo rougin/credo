@@ -4,7 +4,8 @@
  * @Entity(repositoryClass="User_repository")
  * @Table(name="user")
  */
-class User extends CI_Model {
+class User extends CI_Model
+{
 
     /**
      * @Id @GeneratedValue
@@ -30,5 +31,4 @@ class User extends CI_Model {
      * @var string
      */
     protected $_gender;
-
 }

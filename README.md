@@ -46,9 +46,9 @@ class User extends CI_Model {
 $this->load->model('user');
 $this->load->database();
 
-$credo = new Rougin\Credo\Credo($this->db);
-$repository = $this->credo->get_repository('User');
-$user = $repository->find(4);
+$credo      = new Rougin\Credo\Credo($this->db);
+$repository = $credo->get_repository('User');
+$user       = $repository->find(4);
 ```
 
 ### Using `EntityRepository`
@@ -68,10 +68,13 @@ Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_
 ``` php
 class User_repository extends Rougin\Credo\EntityRepository {
     // Other stuff...
+
+	public function find_by_something()
+	{
+		// ...
+	}
 }
 ```
-
-**NOTE**: Extending your repository to `Rougin\Credo\EntityRepository` enables you to call its methods in underscore case. (e.g. `find_all`, `find_by`)
 
 You can now load a repository by using `$this->load->repository($repositoryName)`.
 
@@ -82,9 +85,9 @@ $this->load->model('user');
 $this->load->repository('user');
 $this->load->database();
 
-$credo = new Rougin\Credo\Credo($this->db);
-$repository = $this->credo->get_repository('User');
-$user = $repository->find(4);
+$credo      = new Rougin\Credo\Credo($this->db);
+$repository = $credo->get_repository('User');
+$users      = $repository->find_by_something();
 ```
 
 For more information about repositories in Doctrine, you can find them [here](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/working-with-objects.html#custom-repositories).
