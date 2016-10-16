@@ -3,11 +3,8 @@
 namespace Rougin\Credo;
 
 use Rougin\Credo\Credo;
-use Rougin\SparkPlug\Instance;
 
-use PHPUnit_Framework_TestCase;
-
-class CredoTest extends PHPUnit_Framework_TestCase
+class CredoTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \CI_Controller
@@ -33,7 +30,7 @@ class CredoTest extends PHPUnit_Framework_TestCase
     {
         $appPath = __DIR__ . '/TestApp';
 
-        $this->ci = Instance::create($appPath);
+        $this->ci = \Rougin\SparkPlug\Instance::create($appPath);
 
         $this->ci->load->database();
         $this->ci->load->model($this->table);
@@ -47,20 +44,21 @@ class CredoTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadRepository()
     {
-        $this->ci->load->repository(['post', 'user']);
+        $this->ci->load->repository([ 'post', 'user' ]);
 
-        $this->assertTrue(class_exists('Post_repository'));
-        $this->assertTrue(class_exists('User_repository'));
+        $this->assertTrue(class_exists('Post_repository') && class_exists('User_repository'));
     }
 
+    /**
+     * Tests getting entity repository using Credo.
+     *
+     * @return void
+     */
     public function testCredo()
     {
-        $credo = new Credo;
+        $repository = (new Credo)->get_repository('User');
 
-        $repository = $credo->get_repository('User');
-        $users = $repository->find_all();
-
-        $this->assertCount($this->expectedRows, $users);
+        $this->assertCount($this->expectedRows, $repository->find_all());
     }
 
     /**
@@ -70,27 +68,8 @@ class CredoTest extends PHPUnit_Framework_TestCase
      */
     public function testUnderscoreMethods()
     {
-        $credo = new Credo($this->ci->db);
+        $repository = (new Credo($this->ci->db))->get_repository('User');
 
-        $repository = $credo->get_repository('User');
-        $users = $repository->find_all();
-
-        $this->assertInstanceOf('User_repository', $repository);
-        $this->assertCount($this->expectedRows, $users);
-    }
-
-    /**
-     * Tests methods that does not belong to EntityManager.
-     *
-     * @return void
-     */
-    public function testMethodNotFound()
-    {
-        $credo = new Credo($this->ci->db);
-
-        $repository = $credo->get_repository('User');
-        $users = $repository->find_all_foo();
-
-        $this->assertInstanceOf('User_repository', $repository);
+        $this->assertCount($this->expectedRows, $repository->find_all());
     }
 }

@@ -86,8 +86,7 @@ class Credo
         ];
 
         if ($driver == 'pdo_sqlite') {
-            $keys = explode(':', $database->dsn);
-            $connection['path'] = $keys[1];
+            $connection['path'] = str_replace('sqlite:', '', $database->dsn);
         }
 
         return $connection;
