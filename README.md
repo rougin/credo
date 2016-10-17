@@ -51,7 +51,7 @@ $repository = $credo->get_repository('User');
 $user       = $repository->find(4);
 ```
 
-### Using `EntityRepository`
+### Using `Rougin\Credo\EntityRepository`
 
 Extend `Rougin\Credo\Loader` to `MY_Loader`.
 
@@ -91,6 +91,37 @@ $users      = $repository->find_by_something();
 ```
 
 For more information about repositories in Doctrine, you can find them [here](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/working-with-objects.html#custom-repositories).
+
+### Using `Rougin\Credo\CodeigniterModel`
+
+**application/models/User.php**
+
+``` php
+/**
+ * @Entity
+ * @Table(name="user")
+ */
+class User extends \Rougin\Credo\CodeigniterModel {
+
+    /**
+     * @Id @GeneratedValue
+     * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)
+     * @var integer
+     */
+    protected $_id;
+
+    // ...
+
+}
+```
+
+**application/controllers/Welcome.php**
+
+``` php
+$this->load->model('user', '', TRUE);
+
+$users = $this->user->all();
+```
 
 ## Change Log
 

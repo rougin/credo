@@ -18,7 +18,7 @@ class Loader extends \CI_Loader
      * Loads and instantiates Doctrine-based repositories.
      * It's designed to be called from application controllers.
      *
-     * @param   string  $repository Repository name
+     * @param   string|array $repository
      * @return  object
      */
     public function repository($repository)
@@ -31,9 +31,7 @@ class Loader extends \CI_Loader
             return $this;
         }
 
-        $repository = ucfirst($repository);
-
-        require APPPATH . 'repositories/' . $repository . '_repository.php';
+        require APPPATH . 'repositories/' . ucfirst($repository) . '_repository.php';
 
         return $this;
     }
