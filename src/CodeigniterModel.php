@@ -7,6 +7,11 @@ namespace Rougin\Credo;
  *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ *
+ * @property \CI_DB $db
+ * @method   \Doctrine\ORM\EntityRepository getRepository(string $entityName)
+ * @method   void remove(object $entity)
+ * @method   void flush(null|object|array $entity)
  */
 class CodeigniterModel extends \CI_Model
 {

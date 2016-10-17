@@ -2,16 +2,13 @@
 
 namespace Rougin\Credo;
 
-use Doctrine\Common\Util\Inflector;
-use Doctrine\ORM\EntityRepository as BaseEntityRepository;
-
 /**
  * Entity Repository
  *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class EntityRepository extends BaseEntityRepository
+class EntityRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
      * Calls methods from EntityRepository in underscore case.
@@ -22,14 +19,15 @@ class EntityRepository extends BaseEntityRepository
      */
     public function __call($method, $parameters)
     {
-        $method = Inflector::camelize($method);
+        $method = \Doctrine\Common\Util\Inflector::camelize($method);
+        $result = $this;
 
         if (method_exists($this, $method)) {
-            $class = [$this, $method];
+            $class = [ $this, $method ];
             
-            return call_user_func_array($class, $parameters);
+            $result = call_user_func_array($class, $parameters);
         }
 
-        return $this;
+        return $result;
     }
 }

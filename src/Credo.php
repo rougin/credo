@@ -4,10 +4,6 @@ namespace Rougin\Credo;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Doctrine\Common\ClassLoader;
-use Doctrine\Common\Util\Inflector;
-
-use Rougin\SparkPlug\Instance;
 
 /**
  * Credo
@@ -33,29 +29,21 @@ class Credo
 
         // Loads the database configuration from CodeIgniter
         if (empty($database)) {
-            $ci = Instance::create();
+            $ci = \Rougin\SparkPlug\Instance::create();
 
             $ci->load->database();
 
             $database = $ci->db;
         }
 
-        $connection = $this->setDatabaseConnection($database);
-        $directories = [ APPPATH . 'models', APPPATH . 'repositories' ];
-
-        // Creates an autoloader for the specified folders
-        foreach ($directories as $directory) {
-            $loader = new ClassLoader('', $directory);
-
-            $loader->register();
-        }
+        $connection     = $this->setDatabaseConnection($database);
+        $directories    = [ APPPATH . 'models', APPPATH . 'repositories' ];
+        $proxyDirectory = APPPATH . 'models/proxies';
 
         // Set $ci->db->db_debug to TRUE to disable caching while you develop
-        $config = Setup::createAnnotationMetadataConfiguration(
-            $directories,
-            ($ci) ? $ci->db->db_debug : $database->db_debug,
-            APPPATH . 'models/proxies'
-        );
+        $isDevMode = ($ci) ? $ci->db->db_debug : $database->db_debug;
+
+        $config = Setup::createAnnotationMetadataConfiguration($directories, $isDevMode, $proxyDirectory);
 
         $this->entityManager = EntityManager::create($connection, $config);
     }
@@ -101,7 +89,7 @@ class Credo
      */
     public function __call($method, $parameters)
     {
-        $method = Inflector::camelize($method);
+        $method = \Doctrine\Common\Util\Inflector::camelize($method);
         $result = $this;
 
         if (method_exists($this->entityManager, $method)) {
