@@ -83,4 +83,46 @@ class CodeigniterModel extends \CI_Model
     {
         return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
+
+    /**
+     * Inserts a new row into the table.
+     *
+     * @param  array $data
+     * @return integer
+     */
+    public function insert(array $data)
+    {
+        $factory  = $this->credo->getMetadataFactory();
+        $metadata = $factory->getMetadataFor(get_class($this));
+
+        $this->db->insert($metadata->getTableName(), $data);
+
+        $lastId = $this->db->insert_id();
+
+        $this->credo->refresh($this->find($lastId));
+
+        return $lastId;
+    }
+
+    /**
+     * Updates the selected row from the table.
+     *
+     * @param  integer $id
+     * @param  array   $data
+     * @return boolean
+     */
+    public function update($id, array $data)
+    {
+        $factory  = $this->credo->getMetadataFactory();
+        $metadata = $factory->getMetadataFor(get_class($this));
+
+        $this->db->where($metadata->getSingleIdentifierColumnName(), $id);
+        $this->db->set($data);
+
+        $result = $this->db->update($metadata->getTableName());
+
+        $this->credo->refresh($this->find($id));
+
+        return $result;
+    }
 }
