@@ -95,4 +95,17 @@ class CodeigniterModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($data['subject'], $post->get_subject());
     }
+
+    /**
+     * Tests CodeigniterModel::validation method.
+     *
+     * @return void
+     */
+    public function testValidateMethod()
+    {
+        $expected  = [ 'subject' => 'The Subject field is required.' ];
+        $validated = $this->ci->post->validate([ 'message' => 'test' ]);
+
+        $this->assertEquals($expected, $this->ci->post->validation_errors());
+    }
 }
