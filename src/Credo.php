@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManager;
  * @method \Doctrine\ORM\EntityRepository getRepository(string $entityName)
  * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
  * @method void remove(object $entity)
- * @method void flush(null|object|array $entity)
+ * @method void flush(object|array $entity = null)
  */
 class Credo
 {

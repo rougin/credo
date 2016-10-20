@@ -50,8 +50,10 @@ class CodeigniterModel extends \CI_Model
     {
         $item = $this->find($id);
 
-        $this->credo->remove($item);
-        $this->credo->flush();
+        if (! is_null($item)) {
+            $this->credo->remove($item);
+            $this->credo->flush();
+        }
     }
 
     /**
