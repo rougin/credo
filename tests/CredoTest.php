@@ -56,7 +56,7 @@ class CredoTest extends \PHPUnit_Framework_TestCase
      */
     public function testCredo()
     {
-        $repository = (new Credo)->get_repository('User');
+        $repository = (new Credo($this->ci->db))->get_repository('User');
 
         $this->assertCount($this->expectedRows, $repository->find_all());
     }

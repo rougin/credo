@@ -20,11 +20,12 @@ class EntityRepository extends \Doctrine\ORM\EntityRepository
     public function __call($method, $parameters)
     {
         $method = \Doctrine\Common\Util\Inflector::camelize($method);
-        $result = $this;
 
-        if (method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
+            $result = $this;
+        } else {
             $class = [ $this, $method ];
-            
+                
             $result = call_user_func_array($class, $parameters);
         }
 
