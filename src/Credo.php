@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityManager;
  *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ *
+ * @method \Doctrine\ORM\EntityRepository getRepository(string $entityName)
+ * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
+ * @method void remove(object $entity)
+ * @method void flush(object|array $entity = null)
  */
 class Credo
 {
@@ -21,29 +26,18 @@ class Credo
     protected $entityManager;
 
     /**
-     * @param CI_DB $database
+     * @param \CI_DB_query_builder $database
      */
-    public function __construct($database = null)
+    public function __construct(\CI_DB_query_builder $database)
     {
-        $ci = null;
-
-        // Loads the database configuration from CodeIgniter
-        if (empty($database)) {
-            $ci = \Rougin\SparkPlug\Instance::create();
-
-            $ci->load->database();
-
-            $database = $ci->db;
-        }
-
-        $connection     = $this->setDatabaseConnection($database);
-        $directories    = [ APPPATH . 'models', APPPATH . 'repositories' ];
-        $proxyDirectory = APPPATH . 'models/proxies';
+        $connection  = $this->setDatabaseConnection($database);
+        $directories = [ APPPATH . 'models', APPPATH . 'repositories' ];
+        $proxies     = APPPATH . 'models/proxies';
 
         // Set $ci->db->db_debug to TRUE to disable caching while you develop
-        $isDevMode = ($ci) ? $ci->db->db_debug : $database->db_debug;
+        $isDevMode = $database->db_debug;
 
-        $config = Setup::createAnnotationMetadataConfiguration($directories, $isDevMode, $proxyDirectory);
+        $config = Setup::createAnnotationMetadataConfiguration($directories, $isDevMode, $proxies);
 
         $this->entityManager = EntityManager::create($connection, $config);
     }
@@ -51,10 +45,10 @@ class Credo
     /**
      * Sets up the database configuration from CodeIgniter.
      *
-     * @param  CI_DB $database
+     * @param  \CI_DB_query_builder $database
      * @return array
      */
-    private function setDatabaseConnection($database)
+    private function setDatabaseConnection(\CI_DB_query_builder $database)
     {
         $driver = $database->dbdriver;
         $dsn    = $database->dsn;

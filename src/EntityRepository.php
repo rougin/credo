@@ -23,9 +23,7 @@ class EntityRepository extends \Doctrine\ORM\EntityRepository
         $result = $this;
 
         if (method_exists($this, $method)) {
-            $class = [ $this, $method ];
-            
-            $result = call_user_func_array($class, $parameters);
+            $result = call_user_func_array([ $this, $method ], $parameters);
         }
 
         return $result;
