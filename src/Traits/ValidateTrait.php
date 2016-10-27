@@ -35,9 +35,7 @@ trait ValidateTrait
 
         $this->form_validation->set_rules($this->validation_rules);
 
-        $validated = $this->form_validation->run() === true;
-
-        if (! $validated) {
+        if ($this->form_validation->run() === false) {
             $this->validationErrors = $this->form_validation->error_array();
         }
 
@@ -49,7 +47,7 @@ trait ValidateTrait
      *
      * @return array
      */
-    public function validation_errors()
+    public function validationErrors()
     {
         return $this->validationErrors;
     }

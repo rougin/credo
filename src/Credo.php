@@ -5,6 +5,8 @@ namespace Rougin\Credo;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
+use Rougin\Credo\Helpers\MagicMethodHelper;
+
 /**
  * Credo
  *
@@ -13,10 +15,10 @@ use Doctrine\ORM\EntityManager;
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  *
- * @method \Doctrine\ORM\EntityRepository getRepository(string $entityName)
+ * @method \Doctrine\ORM\EntityRepository             getRepository(string $entityName)
  * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
- * @method void remove(object $entity)
- * @method void flush(object|array $entity = null)
+ * @method void                                       flush(object|array $entity = null)
+ * @method void                                       remove(object $entity)
  */
 class Credo
 {
@@ -83,15 +85,6 @@ class Credo
      */
     public function __call($method, $parameters)
     {
-        $method = \Doctrine\Common\Util\Inflector::camelize($method);
-        $result = $this;
-
-        if (method_exists($this->entityManager, $method)) {
-            $class = [$this->entityManager, $method];
-            
-            $result = call_user_func_array($class, $parameters);
-        }
-
-        return $result;
+        return MagicMethodHelper::call($this, $method, $parameters, $this->entityManager);
     }
 }

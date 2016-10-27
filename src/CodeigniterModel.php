@@ -78,7 +78,7 @@ class CodeigniterModel extends \CI_Model
      * @param  integer|null $offset
      * @return array
      */
-    public function find_by(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -123,5 +123,17 @@ class CodeigniterModel extends \CI_Model
         $this->credo->refresh($this->find($id));
 
         return $result;
+    }
+
+    /**
+     * Calls methods from CodeigniterModel in underscore case.
+     *
+     * @param  string $method
+     * @param  mixed  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return \Rougin\Credo\Helpers\MagicMethodHelper::call($this, $method, $parameters);
     }
 }
