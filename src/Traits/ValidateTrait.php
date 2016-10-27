@@ -37,9 +37,11 @@ trait ValidateTrait
 
         if ($this->form_validation->run() === false) {
             $this->validationErrors = $this->form_validation->error_array();
+
+            return false;
         }
 
-        return $validated;
+        return true;
     }
 
     /**
