@@ -2,10 +2,11 @@
 
 All notable changes to `Credo` will be documented in this file.
 
-## [0.2.0](https://github.com/rougin/credo/compare/v0.1.3...v0.2.0) - CURRENT_DATE
+## [0.2.0](https://github.com/rougin/credo/compare/v0.1.3...v0.2.0) - 2016-10-27
 
 ### Added
 - `CodeigniterModel` that extends to `CI_Model`
+- `ValidateTrait` for validating data using CodeIgniter's `Form_validation` class
 
 ## [0.1.3](https://github.com/rougin/credo/compare/v0.1.1...v0.1.3) - 2016-09-05
 
