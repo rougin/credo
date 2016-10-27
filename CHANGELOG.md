@@ -2,6 +2,11 @@
 
 All notable changes to `Credo` will be documented in this file.
 
+## [0.3.0](https://github.com/rougin/credo/compare/v0.2.0...v0.3.0) - CURRENT_DATE
+
+### Added
+- `PaginateTrait` for creating pagination links using CodeIgniter's `Pagination` class
+
 ## [0.2.0](https://github.com/rougin/credo/compare/v0.1.3...v0.2.0) - 2016-10-27
 
 ### Added
