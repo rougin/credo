@@ -37,7 +37,7 @@ class CodeigniterModel extends \CI_Model
      */
     public function all()
     {
-        return $this->find_by([]);
+        return $this->findBy([]);
     }
 
     /**
