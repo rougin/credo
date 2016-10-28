@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManager;
  * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
  * @method void remove(object $entity)
  * @method void flush(object|array $entity = null)
+ * @method \Doctrine\DBAL\Query\QueryBuilder createQueryBuilder()
  */
 class Credo
 {

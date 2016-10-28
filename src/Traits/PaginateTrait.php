@@ -40,7 +40,7 @@ trait PaginateTrait
 
         $this->pagination->initialize($config);
 
-        $items = $this->findBy([], null, $perPage, $offset);
+        $items = $this->findBy([], [], $perPage, $offset);
 
         return [ $items, $this->pagination->create_links() ];
     }
