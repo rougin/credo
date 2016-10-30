@@ -152,4 +152,16 @@ class CodeigniterModel extends \CI_Model
 
         return [ $metadata->getTableName(), $metadata->getSingleIdentifierColumnName() ];
     }
+
+    /**
+     * Calls methods from CodeigniterModel in underscore case.
+     *
+     * @param  string $method
+     * @param  mixed  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return \Rougin\Credo\Helpers\MagicMethodHelper::call($this, $method, $parameters);
+    }
 }
