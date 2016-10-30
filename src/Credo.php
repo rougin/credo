@@ -17,6 +17,7 @@ use Rougin\Credo\Helpers\MagicMethodHelper;
  *
  * @method \Doctrine\ORM\EntityRepository             getRepository(string $entityName)
  * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
+ * @method \Doctrine\ORM\Query\QueryBuilder           createQueryBuilder()
  * @method void                                       flush(object|array $entity = null)
  * @method void                                       remove(object $entity)
  */

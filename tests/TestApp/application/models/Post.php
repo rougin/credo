@@ -6,7 +6,7 @@
  */
 class Post extends \Rougin\Credo\CodeigniterModel
 {
-    use \Rougin\Credo\Traits\ValidateTrait;
+    use \Rougin\Credo\Traits\PaginateTrait, \Rougin\Credo\Traits\ValidateTrait;
 
     /**
      * @Id @GeneratedValue

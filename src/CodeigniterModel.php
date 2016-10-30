@@ -41,6 +41,23 @@ class CodeigniterModel extends \CI_Model
     }
 
     /**
+     * Returns a total rows from the specified table.
+     *
+     * @return integer
+     */
+    public function countAll()
+    {
+        list($tableName, $primaryKey) = $this->getTableNameAndPrimaryKey();
+
+        $queryBuilder = $this->credo->createQueryBuilder();
+
+        $queryBuilder->select($queryBuilder->expr()->count($tableName . '.' . $primaryKey));
+        $queryBuilder->from(get_class($this), $tableName);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * Deletes the specified ID of the model from the database.
      *
      * @param  integer $id
@@ -91,10 +108,9 @@ class CodeigniterModel extends \CI_Model
      */
     public function insert(array $data)
     {
-        $factory  = $this->credo->getMetadataFactory();
-        $metadata = $factory->getMetadataFor(get_class($this));
+        list($tableName) = $this->getTableNameAndPrimaryKey();
 
-        $this->db->insert($metadata->getTableName(), $data);
+        $this->db->insert($tableName, $data);
 
         $lastId = $this->db->insert_id();
 
@@ -112,17 +128,29 @@ class CodeigniterModel extends \CI_Model
      */
     public function update($id, array $data)
     {
-        $factory  = $this->credo->getMetadataFactory();
-        $metadata = $factory->getMetadataFor(get_class($this));
+        list($tableName, $primaryKey) = $this->getTableNameAndPrimaryKey();
 
-        $this->db->where($metadata->getSingleIdentifierColumnName(), $id);
+        $this->db->where($primaryKey, $id);
         $this->db->set($data);
 
-        $result = $this->db->update($metadata->getTableName());
+        $result = $this->db->update($tableName);
 
         $this->credo->refresh($this->find($id));
 
         return $result;
+    }
+
+    /**
+     * Returns the table name and the corresponding primary key.
+     *
+     * @return array
+     */
+    protected function getTableNameAndPrimaryKey()
+    {
+        $factory  = $this->credo->getMetadataFactory();
+        $metadata = $factory->getMetadataFor(get_class($this));
+
+        return [ $metadata->getTableName(), $metadata->getSingleIdentifierColumnName() ];
     }
 
     /**
