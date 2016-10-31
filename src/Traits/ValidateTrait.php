@@ -35,13 +35,13 @@ trait ValidateTrait
 
         $this->form_validation->set_rules($this->validation_rules);
 
-        if ($this->form_validation->run() === false) {
-            $this->validationErrors = $this->form_validation->error_array();
+        $validated = $this->form_validation->run() === true;
 
-            return false;
+        if (! $validated) {
+            $this->validationErrors = $this->form_validation->error_array();
         }
 
-        return true;
+        return $validated;
     }
 
     /**
