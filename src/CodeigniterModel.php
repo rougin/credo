@@ -2,6 +2,8 @@
 
 namespace Rougin\Credo;
 
+use Rougin\Credo\Helpers\InstanceHelper;
+
 /**
  * Codeigniter Model
  *
@@ -12,22 +14,11 @@ namespace Rougin\Credo;
  */
 class CodeigniterModel extends \CI_Model
 {
-    /**
-     * @var \Rougin\Credo\Credo
-     */
-    protected $credo;
-
-    /**
-     * @var \Doctrine\ORM\EntityRepository
-     */
-    protected $repository;
-
     public function __construct()
     {
         parent::__construct();
 
-        $this->credo      = new Credo($this->db);
-        $this->repository = $this->credo->getRepository(get_class($this));
+        InstanceHelper::create($this->db);
     }
 
     /**
@@ -49,7 +40,7 @@ class CodeigniterModel extends \CI_Model
     {
         list($tableName, $primaryKey) = $this->getTableNameAndPrimaryKey();
 
-        $queryBuilder = $this->credo->createQueryBuilder();
+        $queryBuilder = InstanceHelper::get()->createQueryBuilder();
 
         $queryBuilder->select($queryBuilder->expr()->count($tableName . '.' . $primaryKey));
         $queryBuilder->from(get_class($this), $tableName);
@@ -68,8 +59,8 @@ class CodeigniterModel extends \CI_Model
         $item = $this->find($id);
 
         if (! is_null($item)) {
-            $this->credo->remove($item);
-            $this->credo->flush();
+            InstanceHelper::get()->remove($item);
+            InstanceHelper::get()->flush();
         }
     }
 
@@ -83,7 +74,9 @@ class CodeigniterModel extends \CI_Model
      */
     public function find($id, $lockMode = null, $lockVersion = null)
     {
-        return $this->repository->find($id, $lockMode, $lockVersion);
+        $repository = InstanceHelper::get()->getRepository(get_class($this));
+
+        return $repository->find($id, $lockMode, $lockVersion);
     }
 
     /**
@@ -97,7 +90,9 @@ class CodeigniterModel extends \CI_Model
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+        $repository = InstanceHelper::get()->getRepository(get_class($this));
+
+        return $repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -114,7 +109,7 @@ class CodeigniterModel extends \CI_Model
 
         $lastId = $this->db->insert_id();
 
-        $this->credo->refresh($this->find($lastId));
+        InstanceHelper::get()->refresh($this->find($lastId));
 
         return $lastId;
     }
@@ -135,7 +130,7 @@ class CodeigniterModel extends \CI_Model
 
         $result = $this->db->update($tableName);
 
-        $this->credo->refresh($this->find($id));
+        InstanceHelper::get()->refresh($this->find($id));
 
         return $result;
     }
@@ -147,7 +142,7 @@ class CodeigniterModel extends \CI_Model
      */
     protected function getTableNameAndPrimaryKey()
     {
-        $factory  = $this->credo->getMetadataFactory();
+        $factory  = InstanceHelper::get()->getMetadataFactory();
         $metadata = $factory->getMetadataFor(get_class($this));
 
         return [ $metadata->getTableName(), $metadata->getSingleIdentifierColumnName() ];
