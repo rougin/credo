@@ -11,9 +11,9 @@ namespace Rougin\Credo\Helpers;
 class InstanceHelper
 {
     /**
-     * @var \Rougin\Credo\Credo
+     * @var \Rougin\Credo\Credo|null
      */
-    protected static $credo;
+    protected static $credo = null;
 
     /**
      * Factory method to create Credo instance.
@@ -35,10 +35,6 @@ class InstanceHelper
      */
     public static function get()
     {
-        if (! empty(self::$credo)) {
-            return self::$credo;
-        }
-
-        return null;
+        return self::$credo;
     }
 }
