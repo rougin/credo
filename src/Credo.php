@@ -3,7 +3,6 @@
 namespace Rougin\Credo;
 
 use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 
 use Rougin\Credo\Helpers\MagicMethodHelper;
 
@@ -34,7 +33,7 @@ class Credo
      */
     public function __construct(\CI_DB_query_builder $database)
     {
-        $connection  = $this->setDatabaseConnection($database);
+        $connection  = $this->prepareDatabase($database);
         $directories = [ APPPATH . 'models', APPPATH . 'repositories' ];
         $proxies     = APPPATH . 'models/proxies';
 
@@ -43,7 +42,28 @@ class Credo
 
         $config = Setup::createAnnotationMetadataConfiguration($directories, $isDevMode, $proxies);
 
-        $this->entityManager = EntityManager::create($connection, $config);
+        $this->entityManager = \Doctrine\ORM\EntityManager::create($connection, $config);
+    }
+
+    /**
+     * Gets the database configuration for specific database drivers.
+     *
+     * @param  array $config
+     * @return array
+     */
+    private function getDatabaseConfiguration(array $config)
+    {
+        if ($config['driver'] == 'pdo' && strpos($config['dsn'], ':') !== false) {
+            $keys = explode(':', $config['dsn']);
+
+            $config['driver'] .= '_' . $keys[0];
+        }
+
+        if ($config['driver'] == 'pdo_sqlite') {
+            $config['path'] = str_replace('sqlite:', '', $config['dsn']);
+        }
+
+        return $config;
     }
 
     /**
@@ -52,18 +72,11 @@ class Credo
      * @param  \CI_DB_query_builder $database
      * @return array
      */
-    private function setDatabaseConnection(\CI_DB_query_builder $database)
+    private function prepareDatabase(\CI_DB_query_builder $database)
     {
-        $driver = $database->dbdriver;
-        $dsn    = $database->dsn;
-
-        if ($driver == 'pdo' && strpos($dsn, ':') !== false) {
-            $keys = explode(':', $dsn);
-            $driver .= '_' . $keys[0];
-        }
-
         $connection = [
-            'driver'   => $driver,
+            'dsn'      => $database->dsn,
+            'driver'   => $database->dbdriver,
             'user'     => $database->username,
             'password' => $database->password,
             'host'     => $database->hostname,
@@ -71,11 +84,7 @@ class Credo
             'charset'  => $database->char_set,
         ];
 
-        if ($driver == 'pdo_sqlite') {
-            $connection['path'] = str_replace('sqlite:', '', $database->dsn);
-        }
-
-        return $connection;
+        return $this->getDatabaseConfiguration($connection);
     }
 
     /**
