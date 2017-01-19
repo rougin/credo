@@ -58,7 +58,7 @@ Extend `Rougin\Credo\Loader` to `MY_Loader`.
 **application/core/MY_Loader.php**
 
 ``` php
-class MY_Loader extends Rougin\Credo\Loader {}
+class MY_Loader extends \Rougin\Credo\Loader {}
 ```
 
 Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_repository`)
@@ -66,13 +66,14 @@ Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_
 **application/repositories/User_repository.php**
 
 ``` php
-class User_repository extends Rougin\Credo\EntityRepository {
+class User_repository extends \Rougin\Credo\EntityRepository {
     // Other stuff...
 
 	public function find_by_something()
 	{
 		// ...
 	}
+
 }
 ```
 
