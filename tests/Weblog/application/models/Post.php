@@ -1,13 +1,15 @@
 <?php
 
+use Rougin\Credo\Model;
+use Rougin\Credo\Traits\PaginateTrait;
+use Rougin\Credo\Traits\ValidateTrait;
+
 /**
  * @Entity
  * @Table(name="post")
  */
-class Post extends \Rougin\Credo\CodeigniterModel
+class Post extends Model
 {
-    use \Rougin\Credo\Traits\PaginateTrait, \Rougin\Credo\Traits\ValidateTrait;
-
     /**
      * @Id @GeneratedValue
      * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)
@@ -23,7 +25,7 @@ class Post extends \Rougin\Credo\CodeigniterModel
 
     /**
      * @Column(name="message", type="string", length=2, nullable=FALSE, unique=FALSE)
-     * @var integer
+     * @var string
      */
     protected $message;
 

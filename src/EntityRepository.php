@@ -2,13 +2,16 @@
 
 namespace Rougin\Credo;
 
+use Rougin\Credo\Helpers\MethodHelper;
+use Doctrine\ORM\EntityRepository as BaseRepository;
+
 /**
  * Entity Repository
  *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class EntityRepository extends \Doctrine\ORM\EntityRepository
+class EntityRepository extends BaseRepository
 {
     /**
      * Calls methods from EntityRepository in underscore case.
@@ -19,6 +22,6 @@ class EntityRepository extends \Doctrine\ORM\EntityRepository
      */
     public function __call($method, $parameters)
     {
-        return \Rougin\Credo\Helpers\MagicMethodHelper::call($this, $method, $parameters);
+        return MethodHelper::call($this, $method, $parameters);
     }
 }

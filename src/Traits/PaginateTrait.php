@@ -23,26 +23,29 @@ trait PaginateTrait
     /**
      * Limits the data based on given configuration and generates pagination links.
      *
-     * @param  integer $perPage
+     * @param  integer $page
      * @param  array   $config
      * @return array
      */
-    public function paginate($perPage, $config = [])
+    public function paginate($page, $config = array())
     {
         $this->load->library('pagination');
 
-        $this->prepareConfiguration($config);
+        $config = $this->configuration($config);
 
-        $config['per_page']   = $perPage;
+        $config['per_page'] = (integer) $page;
+
         $config['total_rows'] = $this->countAll();
 
-        $offset = $this->getOffset($config);
+        $offset = $this->offset($page, $config);
 
         $this->pagination->initialize($config);
 
-        $items = $this->findBy([], [], $perPage, $offset);
+        $result = array($this->get($page, $offset));
 
-        return [ $items, $this->pagination->create_links() ];
+        $result[] = $this->pagination->create_links();
+
+        return (array) $result;
     }
 
     /**
@@ -51,19 +54,19 @@ trait PaginateTrait
      * @param  array $config
      * @return integer
      */
-    protected function getOffset(array $config)
+    protected function offset($page, array $config)
     {
         $offset = $this->uri->segment($config['uri_segment']);
 
-        if ($config['page_query_string']) {
-            $offset = $this->input->get($config['query_string_segment']);
+        if ($config['page_query_string'] === true) {
+            $segment = $config['query_string_segment'];
+
+            $offset = $this->input->get($segment);
         }
 
-        if ($config['use_page_numbers'] && $offset != 0) {
-            $offset = ($config['per_page'] * $offset) - $config['per_page'];
-        }
+        $numbers = $config['use_page_numbers'] && $offset !== 0;
 
-        return $offset;
+        return $numbers ? ($page * $offset) - $page : $offset;
     }
 
     /**
@@ -71,26 +74,27 @@ trait PaginateTrait
      * If not available, will based on given and default data.
      *
      * @param  array $config
-     * @return void
+     * @return array
      */
-    protected function prepareConfiguration(array &$config)
+    protected function configuration(array $config)
     {
         $this->load->helper('url');
 
-        $items = [
-            'base_url'             => current_url(),
-            'page_query_string'    => false,
-            'query_string_segment' => 'per_page',
-            'uri_segment'          => 3,
-            'use_page_numbers'     => false,
-        ];
+        $items = array('base_url' => current_url());
 
-        foreach ($items as $item => $defaultValue) {
-            if ($this->config->item($item) !== null) {
-                $config[$item] = $this->config->item($item);
-            } elseif (! isset($config[$item])) {
-                $config[$item] = $defaultValue;
+        $items['page_query_string'] = false;
+        $items['query_string_segment'] = 'per_page';
+        $items['uri_segment'] = 3;
+        $items['use_page_numbers'] = false;
+
+        foreach ((array) $items as $key => $value) {
+            if ($this->config->item($key) !== null) {
+                $config[$key] = $this->config->item($key);
+            } elseif (! isset($config[$key])) {
+                $config[$key] = $value;
             }
         }
+
+        return $config;
     }
 }

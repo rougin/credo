@@ -2,8 +2,14 @@
 
 namespace Rougin\Credo;
 
-use Rougin\Credo\Credo;
+use Rougin\SparkPlug\Instance;
 
+/**
+ * Credo Test
+ *
+ * @package Credo
+ * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ */
 class CredoTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -14,7 +20,7 @@ class CredoTest extends \PHPUnit_Framework_TestCase
     /**
      * @var integer
      */
-    protected $expectedRows = 2;
+    protected $rows = 2;
 
     /**
      * @var string
@@ -22,54 +28,54 @@ class CredoTest extends \PHPUnit_Framework_TestCase
     protected $table = 'post';
 
     /**
-     * Sets up the CodeIgniter application.
+     * Sets up the Codeigniter application.
      *
      * @return void
      */
     public function setUp()
     {
-        $appPath = __DIR__ . '/TestApp';
+        $app = __DIR__ . '/Weblog';
 
-        $this->ci = \Rougin\SparkPlug\Instance::create($appPath);
+        $ci = Instance::create($app);
 
-        $this->ci->load->database();
-        $this->ci->load->model($this->table);
-        $this->ci->load->model('user');
+        $ci->load->database();
+
+        $ci->load->model($this->table);
+
+        $ci->load->model('user');
+
+        $this->ci = $ci;
     }
 
     /**
-     * Tests the $this->load->repository functionality.
-     *
-     * @return void
-     */
-    public function testLoadRepository()
-    {
-        $this->ci->load->repository([ 'post', 'user' ]);
-
-        $this->assertTrue(class_exists('Post_repository') && class_exists('User_repository'));
-    }
-
-    /**
-     * Tests getting entity repository using Credo.
+     * Tests Credo::getRepository.
      *
      * @return void
      */
     public function testCredo()
     {
-        $repository = (new Credo($this->ci->db))->get_repository('User');
+        $credo = new Credo($this->ci->db);
 
-        $this->assertCount($this->expectedRows, $repository->find_all());
+        $user = $credo->get_repository('User');
+
+        $result = $user->find_all();
+
+        $this->assertCount($this->rows, $result);
     }
 
     /**
-     * Tests EntityManager methods in underscore case.
+     * Tests Loader::repository.
      *
      * @return void
      */
-    public function testUnderscoreMethods()
+    public function testLoadRepository()
     {
-        $repository = (new Credo($this->ci->db))->get_repository('User');
+        $this->ci->load->repository(array('post', 'user'));
 
-        $this->assertCount($this->expectedRows, $repository->find_all());
+        $post = class_exists('Post_repository');
+
+        $user = class_exists('User_repository');
+
+        $this->assertTrue($post && $user === true);
     }
 }

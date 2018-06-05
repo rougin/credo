@@ -2,6 +2,8 @@
 
 namespace Rougin\Credo\Helpers;
 
+use Rougin\Credo\Credo;
+
 /**
  * Instance Helper
  *
@@ -16,16 +18,14 @@ class InstanceHelper
     protected static $credo = null;
 
     /**
-     * Factory method to create Credo instance.
+     * Factory method to create the Credo instance.
      *
-     * @param  \CI_DB_query_builder $database
+     * @param  \CI_DB_query_builder $builder
      * @return void
      */
-    public static function create($database)
+    public static function create($builder)
     {
-        if (empty(self::$credo)) {
-            self::$credo = new \Rougin\Credo\Credo($database);
-        }
+        empty(self::$credo) && self::$credo = new Credo($builder);
     }
 
     /**

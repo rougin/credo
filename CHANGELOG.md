@@ -2,6 +2,36 @@
 
 All notable changes to `Credo` will be documented in this file.
 
+## [0.4.0](https://github.com/rougin/credo/compare/v0.3.0...v0.4.0) - Unreleased
+
+### Added
+- `CodeigniterModel::get`
+- `CodeigniterModel::metadata`
+- `CodeigniterModel::primary`
+- `CodeigniterModel::table`
+- `CodeigniterModel::where`
+- `MethodHelper`
+- `Model`
+- `ValidateTrait::errors`
+
+### Changed
+- `Credo`
+- `EntityRepository`
+- `InstanceHelper`
+- `Loader::repository`
+- `PaginateTrait`
+- `README.md`
+
+### Deprecated
+- `ValidateTrait::validationErrors`
+- `ValidateTrait::validation_rules` (renamed as `ValidateTrait::rules`)
+- `CodeigniterModel::findBy`
+- `CodeigniterModel` (renamed as `Model`)
+- `MagicMethodHelper` (renamed as `MethodHelper`)
+
+### Removed
+- `CodeigniterModel::getTableNameAndPrimaryKey`
+
 ## [0.3.0](https://github.com/rougin/credo/compare/v0.2.0...v0.3.0) - 2016-10-29
 
 ### Added

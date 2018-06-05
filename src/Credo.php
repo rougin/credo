@@ -2,14 +2,13 @@
 
 namespace Rougin\Credo;
 
+use CI_DB_query_builder as Builder;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
-
-use Rougin\Credo\Helpers\MagicMethodHelper;
+use Rougin\Credo\Helpers\MethodHelper;
 
 /**
  * Credo
- *
- * Integrates Doctrine to CodeIgniter with ease.
  *
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
@@ -26,65 +25,54 @@ class Credo
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $entityManager;
+    protected $manager;
 
     /**
-     * @param \CI_DB_query_builder $database
+     * Initializes the EntityManager instance.
+     *
+     * @param \CI_DB_query_builder $builder
      */
-    public function __construct(\CI_DB_query_builder $database)
+    public function __construct(Builder $builder)
     {
-        $connection  = $this->prepareDatabase($database);
-        $directories = [ APPPATH . 'models', APPPATH . 'repositories' ];
-        $proxies     = APPPATH . 'models/proxies';
+        $connection = $this->connection($builder);
+
+        if ($connection['driver'] == 'pdo' && strpos($connection['dsn'], ':') !== false) {
+            $keys = explode(':', $connection['dsn']);
+
+            $connection['driver'] .= '_' . $keys[0];
+        }
+
+        if ($connection['driver'] == 'pdo_sqlite') {
+            $connection['path'] = str_replace('sqlite:', '', $connection['dsn']);
+        }
+
+        $directories = array(APPPATH . 'models', APPPATH . 'repositories');
 
         // Set $ci->db->db_debug to TRUE to disable caching while you develop
-        $isDevMode = $database->db_debug;
+        $config = Setup::createAnnotationMetadataConfiguration($directories, $builder->db_debug, APPPATH . 'models/proxies');
 
-        $config = Setup::createAnnotationMetadataConfiguration($directories, $isDevMode, $proxies);
-
-        $this->entityManager = \Doctrine\ORM\EntityManager::create($connection, $config);
-    }
-
-    /**
-     * Gets the database configuration for specific database drivers.
-     *
-     * @param  array $config
-     * @return array
-     */
-    private function getDatabaseConfiguration(array $config)
-    {
-        if ($config['driver'] == 'pdo' && strpos($config['dsn'], ':') !== false) {
-            $keys = explode(':', $config['dsn']);
-
-            $config['driver'] .= '_' . $keys[0];
-        }
-
-        if ($config['driver'] == 'pdo_sqlite') {
-            $config['path'] = str_replace('sqlite:', '', $config['dsn']);
-        }
-
-        return $config;
+        $this->manager = EntityManager::create($connection, $config);
     }
 
     /**
      * Sets up the database configuration from CodeIgniter.
      *
-     * @param  \CI_DB_query_builder $database
+     * @param  \CI_DB_query_builder $builder
      * @return array
      */
-    private function prepareDatabase(\CI_DB_query_builder $database)
+    protected function connection(Builder $builder)
     {
         $connection = [
-            'dsn'      => $database->dsn,
-            'driver'   => $database->dbdriver,
-            'user'     => $database->username,
-            'password' => $database->password,
-            'host'     => $database->hostname,
-            'dbname'   => $database->database,
-            'charset'  => $database->char_set,
+            'dsn'      => $builder->dsn,
+            'driver'   => $builder->dbdriver,
+            'user'     => $builder->username,
+            'password' => $builder->password,
+            'host'     => $builder->hostname,
+            'dbname'   => $builder->database,
+            'charset'  => $builder->char_set,
         ];
 
-        return $this->getDatabaseConfiguration($connection);
+        return $connection;
     }
 
     /**
@@ -96,6 +84,6 @@ class Credo
      */
     public function __call($method, $parameters)
     {
-        return MagicMethodHelper::call($this, $method, $parameters, $this->entityManager);
+        return MethodHelper::call($this->manager, $method, $parameters);
     }
 }

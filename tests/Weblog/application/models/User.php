@@ -6,7 +6,6 @@
  */
 class User extends CI_Model
 {
-
     /**
      * @Id @GeneratedValue
      * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)

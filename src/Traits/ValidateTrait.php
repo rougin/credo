@@ -17,7 +17,22 @@ trait ValidateTrait
     /**
      * @var array
      */
-    protected $validationErrors = [];
+    protected $errors = array();
+
+    /**
+     * @var array
+     */
+    protected $rules = array();
+
+    /**
+     * Returns a listing of error messages.
+     *
+     * @return array
+     */
+    public function errors()
+    {
+        return $this->errors;
+    }
 
     /**
      * Validates the specified data based on the validation rules.
@@ -25,23 +40,25 @@ trait ValidateTrait
      * @param  array $data
      * @return boolean
      */
-    public function validate(array $data = [])
+    public function validate(array $data = array())
     {
+        $this->rules = $this->validation_rules;
+
         $this->load->library('form_validation');
 
-        if (! empty($data)) {
-            $this->form_validation->set_data($data);
+        $validation = $this->form_validation;
+
+        $validation->set_data((array) $data);
+
+        $validation->set_rules($this->rules);
+
+        if ($validation->run() === false) {
+            $errors = $validation->error_array();
+
+            $this->errors = (array) $errors;
         }
 
-        $this->form_validation->set_rules($this->validation_rules);
-
-        $validated = $this->form_validation->run() === true;
-
-        if (! $validated) {
-            $this->validationErrors = $this->form_validation->error_array();
-        }
-
-        return $validated;
+        return $validation->run() === true;
     }
 
     /**
@@ -51,6 +68,6 @@ trait ValidateTrait
      */
     public function validationErrors()
     {
-        return $this->validationErrors;
+        return $this->errors();
     }
 }
