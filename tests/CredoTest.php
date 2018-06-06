@@ -48,22 +48,6 @@ class CredoTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Credo::getRepository.
-     *
-     * @return void
-     */
-    public function testCredo()
-    {
-        $credo = new Credo($this->ci->db);
-
-        $user = $credo->get_repository('User');
-
-        $result = $user->find_all();
-
-        $this->assertCount($this->rows, $result);
-    }
-
-    /**
      * Tests Loader::repository.
      *
      * @return void
@@ -77,5 +61,21 @@ class CredoTest extends \PHPUnit_Framework_TestCase
         $user = class_exists('User_repository');
 
         $this->assertTrue($post && $user === true);
+    }
+
+    /**
+     * Tests Credo::getRepository.
+     *
+     * @return void
+     */
+    public function testCredo()
+    {
+        $credo = new Credo($this->ci->db);
+
+        $user = $credo->get_repository('User');
+
+        $result = (array) $user->find_all();
+
+        $this->assertCount($this->rows, $result);
     }
 }

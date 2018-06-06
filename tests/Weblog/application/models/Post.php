@@ -10,6 +10,8 @@ use Rougin\Credo\Traits\ValidateTrait;
  */
 class Post extends Model
 {
+    use PaginateTrait, ValidateTrait;
+
     /**
      * @Id @GeneratedValue
      * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)

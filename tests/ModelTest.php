@@ -98,13 +98,11 @@ class ModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testPaginateMethod()
     {
-        $config = array();
+        $config = array('page_query_string' => true);
 
-        $expected = 5;
+        $expected = (integer) 5;
 
         $_GET['per_page'] = 1;
-
-        $config['page_query_string'] = true;
 
         $config['use_page_numbers'] = true;
 

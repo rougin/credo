@@ -1,5 +1,7 @@
 <?php
 
-class MY_Loader extends Rougin\Credo\Loader
+use Rougin\Credo\Loader;
+
+class MY_Loader extends Loader
 {
 }
