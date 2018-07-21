@@ -148,4 +148,16 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, (array) $result);
     }
+
+    /**
+     * Tests Model::where.
+     *
+     * @return void
+     */
+    public function testWhereMethod()
+    {
+        $this->ci->post->where('description', 'hdcgXrOKUD');
+
+        $this->assertCount(1, $this->ci->post->get());
+    }
 }
