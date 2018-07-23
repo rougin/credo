@@ -105,11 +105,10 @@ class Model extends \CI_Model
     /**
      * Returns an array of rows from a specified entity.
      *
-     * @param  string       $entity
      * @param  integer|null $limit
      * @param  integer|null $page
      * @param  array|null   $order
-     * @return mixed
+     * @return array
      */
     public function get($limit = null, $page = null, array $order = null)
     {
