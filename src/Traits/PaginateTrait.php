@@ -14,9 +14,8 @@ namespace Rougin\Credo\Traits;
  * @property \CI_Pagination $pagination
  * @property \CI_URI        $uri
  *
- * @method array   all()
  * @method integer countAll()
- * @method array   findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method array   get($limit = null, $page = null, array $order = null)
  */
 trait PaginateTrait
 {
