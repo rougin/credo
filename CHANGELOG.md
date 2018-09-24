@@ -2,7 +2,7 @@
 
 All notable changes to `Credo` will be documented in this file.
 
-## [0.4.0](https://github.com/rougin/credo/compare/v0.3.0...v0.4.0) - Unreleased
+## [0.4.0](https://github.com/rougin/credo/compare/v0.3.0...v0.4.0) - 2018-09-24
 
 ### Added
 - `CodeigniterModel::get`
