@@ -2,8 +2,8 @@
 
 namespace Rougin\Credo;
 
-use Rougin\Credo\Helpers\MethodHelper;
-use Doctrine\ORM\EntityRepository as BaseRepository;
+use Doctrine\Common\Util\Inflector;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Entity Repository
@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository as BaseRepository;
  * @package Credo
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class EntityRepository extends BaseRepository
+class Repository extends EntityRepository
 {
     /**
      * Calls methods from EntityRepository in underscore case.
@@ -22,6 +22,8 @@ class EntityRepository extends BaseRepository
      */
     public function __call($method, $parameters)
     {
-        return MethodHelper::call($this, $method, $parameters);
+        $instance = array($this, Inflector::camelize($method));
+
+        return call_user_func_array($instance, $parameters);
     }
 }
