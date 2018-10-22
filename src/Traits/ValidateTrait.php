@@ -5,12 +5,12 @@ namespace Rougin\Credo\Traits;
 /**
  * Validate Trait
  *
- * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
- *
- * @property array               $validation_rules
+ * @property array               $rules
  * @property \CI_Form_validation $form_validation
  * @property \CI_Loader          $load
+ *
+ * @package Credo
+ * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 trait ValidateTrait
 {
@@ -18,11 +18,6 @@ trait ValidateTrait
      * @var array
      */
     protected $errors = array();
-
-    /**
-     * @var array
-     */
-    protected $rules = array();
 
     /**
      * Returns a listing of error messages.
@@ -40,10 +35,8 @@ trait ValidateTrait
      * @param  array $data
      * @return boolean
      */
-    public function validate(array $data = array())
+    public function validate(array $data)
     {
-        $this->rules = $this->validation_rules;
-
         $this->load->library('form_validation');
 
         $validation = $this->form_validation;
@@ -59,15 +52,5 @@ trait ValidateTrait
         }
 
         return $validation->run() === true;
-    }
-
-    /**
-     * Returns a listing of error messages.
-     *
-     * @return array
-     */
-    public function validationErrors()
-    {
-        return $this->errors();
     }
 }
