@@ -34,15 +34,15 @@ class ModelTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $app = (string) __DIR__ . '/Weblog';
-
-        $ci = Instance::create($app);
+        $ci = Instance::create(__DIR__ . '/Weblog');
 
         $ci->load->helper('inflector');
 
         $table = (string) singular($this->table);
 
         $ci->load->model($table, '', true);
+
+        $ci->post->credo(new Credo($ci->db));
 
         $this->ci = $ci;
     }
@@ -66,52 +66,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::find.
-     *
-     * @return void
-     */
-    public function testFindMethod()
-    {
-        list($id, $expected) = array(2, 'viG iJOzO');
-
-        $post = $this->ci->post->find((integer) $id);
-
-        $result = (string) $post->get_subject();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * Tests Model::get.
-     *
-     * @return void
-     */
-    public function testGetMethod()
-    {
-        $this->assertCount($this->rows, $this->ci->post->all());
-    }
-
-    /**
-     * Tests Model::paginate.
-     *
-     * @return void
-     */
-    public function testPaginateMethod()
-    {
-        $config = array('page_query_string' => true);
-
-        $expected = (integer) 5;
-
-        $_GET['per_page'] = 1;
-
-        $config['use_page_numbers'] = true;
-
-        $result = $this->ci->post->paginate($expected, $config);
-
-        $this->assertCount($expected, $result[0]);
-    }
-
-    /**
      * Tests Model::update.
      *
      * @return void
@@ -132,24 +86,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::validation.
-     *
-     * @return void
-     */
-    public function testValidateMethod()
-    {
-        $message = 'The Subject field is required.';
-
-        $expected = array('subject' => $message);
-
-        $this->ci->post->validate(array('message' => 'test'));
-
-        $result = $this->ci->post->validation_errors();
-
-        $this->assertEquals($expected, (array) $result);
-    }
-
-    /**
      * Tests Model::where.
      *
      * @return void
@@ -157,6 +93,20 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     public function testWhereMethod()
     {
         $this->ci->post->where('description', 'hdcgXrOKUD');
+
+        $this->assertCount(1, $this->ci->post->get());
+    }
+
+    /**
+     * Tests Model::where with array as a parameter.
+     *
+     * @return void
+     */
+    public function testWhereWithArrayMethod()
+    {
+        $where = array('description' => 'hdcgXrOKUD');
+
+        $this->ci->post->where((array) $where);
 
         $this->assertCount(1, $this->ci->post->get());
     }

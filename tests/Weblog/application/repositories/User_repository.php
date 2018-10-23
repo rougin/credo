@@ -1,7 +1,7 @@
 <?php
 
-use Rougin\Credo\EntityRepository;
+use Rougin\Credo\Repository;
 
-class User_repository extends EntityRepository
+class User_repository extends Repository
 {
 }

@@ -53,7 +53,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $validation_rules = array(
+    protected $rules = array(
         array('field' => 'subject', 'label' => 'Subject', 'rules' => 'required'),
     );
 }
