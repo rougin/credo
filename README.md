@@ -237,7 +237,7 @@ ValidateTrait::validationErrors()
 ValidateTrait::errors()
 ```
 
-### Change the property `Model::validation_rules` to `ValidateTrait::rules`
+### Change the property `ValidateTrait::validation_rules` to `ValidateTrait::rules`
 
 **Before**
 
