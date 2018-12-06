@@ -6,7 +6,7 @@ namespace Rougin\Credo;
  * Loader
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Loader extends \CI_Loader
 {

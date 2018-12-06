@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
  * Entity Repository
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Repository extends EntityRepository
 {

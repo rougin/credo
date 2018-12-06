@@ -18,7 +18,7 @@ use Doctrine\ORM\Tools\Setup;
  * @method void                                       remove(object $entity)
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Credo
 {

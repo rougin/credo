@@ -8,7 +8,7 @@ use Rougin\SparkPlug\Instance;
  * Validate Trait Test
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ValidateTraitTest extends \PHPUnit_Framework_TestCase
 {

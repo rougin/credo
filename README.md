@@ -9,15 +9,15 @@
 
 Integrates [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) for the [Codeigniter](https://codeigniter.com) framework.
 
-## Install
+## Installation
 
-Install Credo via [Composer](https://getcomposer.org):
+Install `Credo` via [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require rougin/credo
 ```
 
-## Usage
+## Basic Usage
 
 ``` php
 // application/models/User.php
@@ -269,7 +269,7 @@ $users = $this->user->all();
 $users = $this->user->get();
 ```
 
-## Change Log
+## Changelog
 
 Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
@@ -279,27 +279,21 @@ Please see [CHANGELOG][link-changelog] for more information what has changed rec
 $ composer test
 ```
 
-## Security
-
-If you discover any security related issues, please email rougingutib@gmail.com instead of using the issue tracker.
-
 ## Credits
 
-- [Rougin Royce Gutib][link-author]
 - [All contributors][link-contributors]
 
 ## License
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/rougin/credo.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/rougin/credo/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/rougin/credo.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/rougin/credo.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/rougin/credo.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/rougin/credo.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/rougin/credo/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/rougin/credo.svg?style=flat-square
 
-[link-author]: https://rougin.github.io
 [link-changelog]: https://github.com/rougin/credo/blob/master/CHANGELOG.md
 [link-code-quality]: https://scrutinizer-ci.com/g/rougin/credo
 [link-contributors]: https://github.com/rougin/credo/contributors

@@ -10,7 +10,7 @@ use Rougin\Credo\Credo;
  * @method string table()
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 trait CredoTrait
 {

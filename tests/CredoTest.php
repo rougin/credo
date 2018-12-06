@@ -8,7 +8,7 @@ use Rougin\SparkPlug\Instance;
  * Credo Test
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class CredoTest extends \PHPUnit_Framework_TestCase
 {

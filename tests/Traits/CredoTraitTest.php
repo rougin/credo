@@ -9,7 +9,7 @@ use Rougin\Credo\Credo;
  * Credo Trait Test
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class CredoTraitTest extends \PHPUnit_Framework_TestCase
 {

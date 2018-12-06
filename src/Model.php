@@ -6,7 +6,7 @@ namespace Rougin\Credo;
  * Model
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  *
  * @property \CI_DB_query_builder $db
  */

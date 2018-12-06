@@ -10,7 +10,7 @@ namespace Rougin\Credo\Traits;
  * @property \CI_Loader          $load
  *
  * @package Credo
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 trait ValidateTrait
 {
