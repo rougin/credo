@@ -7,10 +7,10 @@
     "authors":
     [
         {
-            "name": "Rougin Gutib",
             "email": "rougingutib@gmail.com",
             "homepage": "https://rougin.github.io/",
-            "role": "Developer"
+            "name": "Rougin Gutib",
+            "role": "Software Engineer"
         }
     ],
     "require":
@@ -52,8 +52,9 @@
     },
     "suggest":
     {
-        "rougin/codeigniter": "Core functionality of the Codeigniter framework.",
-        "rougin/combustor": "MVC code generator for the Codeigniter framework.",
-        "rougin/refinery": "\"Ready-to-eat\" migrations for the Codeigniter framework."
+        "rougin/combustor": "CRUD generator for the Codeigniter framework.",
+        "rougin/ignite": "Composer-based project for the Codeigniter framework.",
+        "rougin/refinery": "\"Ready-to-eat\" migrations for Codeigniter framework",
+        "rougin/wildfire": "Query Builder wrapper for the Codeigniter framework."
     }
 }
