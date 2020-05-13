@@ -2,13 +2,13 @@
     "name": "rougin/credo",
     "description": "Doctrine ORM integration for the Codeigniter framework.",
     "keywords": ["codeigniter", "credo", "doctrine", "integration", "orm"],
-    "homepage": "https://rougin.github.io/credo/",
+    "homepage": "https://roug.in/credo/",
     "license": "MIT",
     "authors":
     [
         {
             "email": "rougingutib@gmail.com",
-            "homepage": "https://rougin.github.io/",
+            "homepage": "https://roug.in/",
             "name": "Rougin Gutib",
             "role": "Software Engineer"
         }
