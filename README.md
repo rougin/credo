@@ -7,11 +7,11 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Integrates [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) for the [Codeigniter](https://codeigniter.com) framework.
+Credo is a special library that easily integrates [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) into the [Codeigniter](https://codeigniter.com) framework. It is also based on Doctrine's official [integration for Codeigniter](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html).
 
 ## Installation
 
-Install `Credo` via [Composer](https://getcomposer.org/):
+Install `Credo` through [Composer](https://getcomposer.org):
 
 ``` bash
 $ composer require rougin/credo
@@ -26,8 +26,8 @@ $ composer require rougin/credo
  * @Entity
  * @Table(name="user")
  */
-class User extends CI_Model {
-
+class User extends CI_Model
+{
     /**
      * @Id @GeneratedValue
      * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)
@@ -36,7 +36,6 @@ class User extends CI_Model {
     protected $_id;
 
     // ...
-
 }
 ```
 
@@ -61,7 +60,9 @@ Extend `Rougin\Credo\Loader` to `MY_Loader`:
 ``` php
 // application/core/MY_Loader.php
 
-class MY_Loader extends \Rougin\Credo\Loader {}
+class MY_Loader extends \Rougin\Credo\Loader
+{
+}
 ```
 
 Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_repository`)
@@ -71,13 +72,12 @@ Kindly also use the suffix `_repository` for creating repositories. (e.g. `User_
 
 use Rougin\Credo\Repository;
 
-class User_repository extends Repository {
-
+class User_repository extends Repository
+{
     public function find_by_something()
     {
         // ...
     }
-
 }
 ```
 
@@ -111,8 +111,8 @@ For more information about repositories in Doctrine, please check its [documenta
  * @Entity
  * @Table(name="user")
  */
-class User extends \Rougin\Credo\Model {
-
+class User extends \Rougin\Credo\Model
+{
     /**
      * @Id @GeneratedValue
      * @Column(name="id", type="integer", length=10, nullable=FALSE, unique=FALSE)
@@ -121,7 +121,6 @@ class User extends \Rougin\Credo\Model {
     protected $_id;
 
     // ...
-
 }
 ```
 
