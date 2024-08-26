@@ -15,4 +15,4 @@ parameters:
     - '#^Call to an undefined method CI_Loader\:\:repository\(\)\.$#'
     - '#^Constant APPPATH not found\.$#'
     - '#^Method Rougin\\Credo\\Model\:\:metadata\(\) return type with generic class Doctrine\\ORM\\Mapping\\ClassMetadata does not specify its types\: T$#'
-    - '#^Parameter \#2 \$lockMode of method Doctrine\\ORM\\EntityRepository\<object\>\:\:find\(\) expects 0\|1\|2\|4\|null, int given\.$#'
+    - '#^Parameter \#2 \$lockMode of method Doctrine\\ORM\\EntityRepository\<object\>\:\:find\(\) expects 0\|1\|2\|4\|null, int\|null given\.$#'
