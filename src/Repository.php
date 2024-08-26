@@ -2,28 +2,41 @@
 
 namespace Rougin\Credo;
 
-use Doctrine\Common\Util\Inflector;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Entity Repository
+ * @template TEntityClass of object
+ * @extends \Doctrine\ORM\EntityRepository<TEntityClass>
  *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Repository extends EntityRepository
 {
     /**
      * Calls methods from EntityRepository in underscore case.
      *
-     * @param  string $method
-     * @param  mixed  $parameters
+     * @param string  $method
+     * @param mixed[] $params
+     *
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call($method, $params)
     {
-        $instance = array($this, Inflector::camelize($method));
+        // Camelize the method name -----------------
+        $words = ucwords(strtr($method, '_-', '  '));
 
-        return call_user_func_array($instance, $parameters);
+        $search = array(' ', '_', '-');
+
+        $method = str_replace($search, '', $words);
+
+        $method = lcfirst((string) $method);
+        // ------------------------------------------
+
+        /** @var callable */
+        $class = array($this, $method);
+
+        return call_user_func_array($class, $params);
     }
 }

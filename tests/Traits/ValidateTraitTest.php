@@ -1,16 +1,16 @@
 <?php
 
-namespace Rougin\Credo;
+namespace Rougin\Credo\Traits;
 
+use Rougin\Credo\Testcase;
 use Rougin\SparkPlug\Instance;
 
 /**
- * Validate Trait Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
-class ValidateTraitTest extends \PHPUnit_Framework_TestCase
+class ValidateTraitTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -18,11 +18,9 @@ class ValidateTraitTest extends \PHPUnit_Framework_TestCase
     protected $ci;
 
     /**
-     * Sets up the Codeigniter application.
-     *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $path = (string) __DIR__ . '/Weblog';
 
@@ -32,15 +30,13 @@ class ValidateTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ValidateTrait::validate.
-     *
      * @return void
      */
-    public function testValidateMethod()
+    public function test_validation_errors()
     {
         $expected = array('subject' => 'The Subject field is required.');
 
-        $post = new \Post(array());
+        $post = new \Post;
 
         $post->validate(array('message' => 'test'));
 

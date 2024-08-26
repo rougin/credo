@@ -5,12 +5,11 @@ namespace Rougin\Credo;
 use Rougin\SparkPlug\Instance;
 
 /**
- * Model Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
-class ModelTest extends \PHPUnit_Framework_TestCase
+class ModelTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -28,11 +27,9 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     protected $table = 'posts';
 
     /**
-     * Sets up the CodeIgniter application.
-     *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $ci = Instance::create(__DIR__ . '/Weblog');
 
@@ -48,17 +45,15 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::delete.
-     *
      * @return void
      */
-    public function testDeleteMethod()
+    public function test_delete_from_controller()
     {
         $data = array('subject' => 'test', 'message' => 'test');
 
         $id = $this->ci->post->insert($data);
 
-        $this->ci->post->delete((integer) $id);
+        $this->ci->post->delete((int) $id);
 
         $post = $this->ci->post->find($id);
 
@@ -66,11 +61,9 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::update.
-     *
      * @return void
      */
-    public function testUpdateMethod()
+    public function test_update_from_controller()
     {
         $data = array('subject' => 'test', 'message' => 'test');
 
@@ -86,11 +79,9 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::where.
-     *
      * @return void
      */
-    public function testWhereMethod()
+    public function test_get_with_filter()
     {
         $this->ci->post->where('description', 'hdcgXrOKUD');
 
@@ -98,11 +89,9 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Model::where with array as a parameter.
-     *
      * @return void
      */
-    public function testWhereWithArrayMethod()
+    public function test_get_with_filter_as_array()
     {
         $where = array('description' => 'hdcgXrOKUD');
 

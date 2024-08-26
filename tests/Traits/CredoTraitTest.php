@@ -1,17 +1,16 @@
 <?php
 
-namespace Rougin\Credo;
+namespace Rougin\Credo\Traits;
 
 use Rougin\SparkPlug\Instance;
-use Rougin\Credo\Credo;
+use Rougin\Credo\Testcase;
 
 /**
- * Credo Trait Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
-class CredoTraitTest extends \PHPUnit_Framework_TestCase
+class CredoTraitTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -24,11 +23,9 @@ class CredoTraitTest extends \PHPUnit_Framework_TestCase
     protected $rows = 10;
 
     /**
-     * Sets up the Codeigniter application.
-     *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $path = (string) __DIR__ . '/Weblog';
 
@@ -40,15 +37,13 @@ class CredoTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests CredoTrait::find.
-     *
      * @return void
      */
-    public function testFindMethod()
+    public function test_find_from_controller()
     {
         list($id, $expected) = array(2, 'viG iJOzO');
 
-        $post = $this->ci->post->find((integer) $id);
+        $post = $this->ci->post->find((int) $id);
 
         $result = (string) $post->get_subject();
 
@@ -56,21 +51,17 @@ class CredoTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests CredoTrait::findBy.
-     *
      * @return void
      */
-    public function testFindByMethod()
+    public function test_findBy_from_controller()
     {
         $this->assertCount($this->rows, $this->ci->post->findBy());
     }
 
     /**
-     * Tests CredoTrait::get.
-     *
      * @return void
      */
-    public function testGetMethod()
+    public function test_get_from_controller()
     {
         $this->assertCount($this->rows, $this->ci->post->get());
     }
