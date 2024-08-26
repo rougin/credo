@@ -63,24 +63,6 @@ class ModelTest extends Testcase
     /**
      * @return void
      */
-    public function test_update_from_controller()
-    {
-        $data = array('subject' => 'test', 'message' => 'test');
-
-        $this->ci->post->update(3, $data);
-
-        $post = $this->ci->post->find(3);
-
-        $expected = (string) $data['subject'];
-
-        $result = (string) $post->get_subject();
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @return void
-     */
     public function test_get_with_filter()
     {
         $this->ci->post->where('description', 'hdcgXrOKUD');
@@ -98,5 +80,23 @@ class ModelTest extends Testcase
         $this->ci->post->where((array) $where);
 
         $this->assertCount(1, $this->ci->post->get());
+    }
+
+    /**
+     * @return void
+     */
+    public function test_update_from_controller()
+    {
+        $data = array('subject' => 'test', 'message' => 'test');
+
+        $this->ci->post->update(3, $data);
+
+        $post = $this->ci->post->find(3);
+
+        $expected = (string) $data['subject'];
+
+        $result = (string) $post->get_subject();
+
+        $this->assertEquals($expected, $result);
     }
 }
