@@ -1,4 +1,4 @@
-The following are the breaking changes introduced in `v0.5`. As previously mentioned, this was done to improve its maintainability and to conform more on the methods from both the `Codeigniter` and `Doctrine ORM` projects.
+The following are the breaking changes introduced in `v0.5`. As previously mentioned, this was done to improve its maintainability and to conform more on the methods from both the `Codeigniter 3` and `Doctrine ORM` projects.
 
 ## Change the `CodeigniterModel` class to `Model` class
 

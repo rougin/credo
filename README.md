@@ -6,7 +6,7 @@
 [![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Credo is a packages that integrates [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) to [Codeigniter](https://codeigniter.com). This package was created based on the official [integration for Codeigniter](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine` package.
+Credo is a packages that acts as a wrapper of [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) to a [Codeigniter 3](https://codeigniter.com/userguide3/) project. This package was created based on the official [integration for Codeigniter 3](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine` package.
 
 ## Installation
 
@@ -56,7 +56,7 @@ $user = $repository->findBy(array());
 
 ### Using `Rougin\Credo\Repository`
 
-To enable this package on a Codeigniter project, extend `Rougin\Credo\Loader` to `MY_Loader` first:
+To enable this package on a `Codeigniter 3` project, extend `Rougin\Credo\Loader` to `MY_Loader` first:
 
 ``` php
 // application/core/MY_Loader.php
@@ -141,7 +141,7 @@ $users = $this->user->get();
 
 ## Migrating to the `v0.5.0` release
 
-The new release for `v0.5.0` will be having a [backward compatibility](https://en.wikipedia.org/wiki/Backward_compatibility) break (BC break). With this, some functionalities on the earlier versions might not be working after upgrading. This was done to increase the maintainability of the project while also adhering to the functionalities for both `Codeigniter` and `Doctrine ORM`. Please see the [UPGRADING][link-upgrading] page for the said breaking changes.
+The new release for `v0.5.0` will be having a [backward compatibility](https://en.wikipedia.org/wiki/Backward_compatibility) break (BC break). With this, some functionalities on the earlier versions might not be working after upgrading. This was done to increase the maintainability of the project while also adhering to the functionalities for both `Codeigniter 3` and `Doctrine ORM`. Please see the [UPGRADING][link-upgrading] page for the said breaking changes.
 
 > [!TIP]
 > If still using the `v0.4` release, kindly click its documentation below:
