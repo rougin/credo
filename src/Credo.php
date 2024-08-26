@@ -97,7 +97,7 @@ class Credo
      */
     public function find($class, $id, $mode = null, $version = null)
     {
-        return $this->manager->getRepository($class)->find($id, (int) $mode, $version);
+        return $this->manager->getRepository($class)->find($id, $mode, $version);
     }
 
     /**
