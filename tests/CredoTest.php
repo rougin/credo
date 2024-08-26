@@ -10,7 +10,7 @@ use Rougin\SparkPlug\Instance;
  * @package Credo
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class CredoTest extends \PHPUnit_Framework_TestCase
+class CredoTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -32,7 +32,7 @@ class CredoTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $app = __DIR__ . '/Weblog';
 

@@ -36,16 +36,25 @@ class Credo
      * Calls methods from the specified object in underscore case.
      *
      * @param  string $method
-     * @param  mixed  $parameters
+     * @param  mixed  $params
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call($method, $params)
     {
-        $method = (string) Inflector::camelize($method);
+        // Camelize the method name -----------------
+        $words = ucwords(strtr($method, '_-', '  '));
 
-        $instance = array($this->manager, (string) $method);
+        $search = array(' ', '_', '-');
 
-        return call_user_func_array($instance, $parameters);
+        $method = str_replace($search, '', $words);
+
+        $method = lcfirst((string) $method);
+        // ------------------------------------------
+
+        /** @var callable */
+        $class = array($this->manager, $method);
+
+        return call_user_func_array($class, $params);
     }
 
     /**

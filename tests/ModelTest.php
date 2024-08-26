@@ -10,7 +10,7 @@ use Rougin\SparkPlug\Instance;
  * @package Credo
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class ModelTest extends \PHPUnit_Framework_TestCase
+class ModelTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -32,7 +32,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $ci = Instance::create(__DIR__ . '/Weblog');
 

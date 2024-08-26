@@ -1,9 +1,9 @@
 <?php
 
-namespace Rougin\Credo;
+namespace Rougin\Credo\Traits;
 
 use Rougin\SparkPlug\Instance;
-use Rougin\Credo\Credo;
+use Rougin\Credo\Testcase;
 
 /**
  * Credo Trait Test
@@ -11,7 +11,7 @@ use Rougin\Credo\Credo;
  * @package Credo
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class CredoTraitTest extends \PHPUnit_Framework_TestCase
+class CredoTraitTest extends Testcase
 {
     /**
      * @var \CI_Controller
@@ -28,7 +28,7 @@ class CredoTraitTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function doSetUp()
     {
         $path = (string) __DIR__ . '/Weblog';
 
