@@ -5,10 +5,9 @@ namespace Rougin\Credo;
 use Rougin\SparkPlug\Instance;
 
 /**
- * Model Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class ModelTest extends Testcase
 {
@@ -28,8 +27,6 @@ class ModelTest extends Testcase
     protected $table = 'posts';
 
     /**
-     * Sets up the CodeIgniter application.
-     *
      * @return void
      */
     public function doSetUp()
@@ -48,17 +45,15 @@ class ModelTest extends Testcase
     }
 
     /**
-     * Tests Model::delete.
-     *
      * @return void
      */
-    public function testDeleteMethod()
+    public function test_delete_from_controller()
     {
         $data = array('subject' => 'test', 'message' => 'test');
 
         $id = $this->ci->post->insert($data);
 
-        $this->ci->post->delete((integer) $id);
+        $this->ci->post->delete((int) $id);
 
         $post = $this->ci->post->find($id);
 
@@ -66,11 +61,9 @@ class ModelTest extends Testcase
     }
 
     /**
-     * Tests Model::update.
-     *
      * @return void
      */
-    public function testUpdateMethod()
+    public function test_update_from_controller()
     {
         $data = array('subject' => 'test', 'message' => 'test');
 
@@ -86,11 +79,9 @@ class ModelTest extends Testcase
     }
 
     /**
-     * Tests Model::where.
-     *
      * @return void
      */
-    public function testWhereMethod()
+    public function test_get_with_filter()
     {
         $this->ci->post->where('description', 'hdcgXrOKUD');
 
@@ -98,11 +89,9 @@ class ModelTest extends Testcase
     }
 
     /**
-     * Tests Model::where with array as a parameter.
-     *
      * @return void
      */
-    public function testWhereWithArrayMethod()
+    public function test_get_with_filter_as_array()
     {
         $where = array('description' => 'hdcgXrOKUD');
 

@@ -6,10 +6,9 @@ use Rougin\SparkPlug\Instance;
 use Rougin\Credo\Testcase;
 
 /**
- * Credo Trait Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class CredoTraitTest extends Testcase
 {
@@ -24,8 +23,6 @@ class CredoTraitTest extends Testcase
     protected $rows = 10;
 
     /**
-     * Sets up the Codeigniter application.
-     *
      * @return void
      */
     public function doSetUp()
@@ -40,15 +37,13 @@ class CredoTraitTest extends Testcase
     }
 
     /**
-     * Tests CredoTrait::find.
-     *
      * @return void
      */
-    public function testFindMethod()
+    public function test_find_from_controller()
     {
         list($id, $expected) = array(2, 'viG iJOzO');
 
-        $post = $this->ci->post->find((integer) $id);
+        $post = $this->ci->post->find((int) $id);
 
         $result = (string) $post->get_subject();
 
@@ -56,21 +51,17 @@ class CredoTraitTest extends Testcase
     }
 
     /**
-     * Tests CredoTrait::findBy.
-     *
      * @return void
      */
-    public function testFindByMethod()
+    public function test_findBy_from_controller()
     {
         $this->assertCount($this->rows, $this->ci->post->findBy());
     }
 
     /**
-     * Tests CredoTrait::get.
-     *
      * @return void
      */
-    public function testGetMethod()
+    public function test_get_from_controller()
     {
         $this->assertCount($this->rows, $this->ci->post->get());
     }

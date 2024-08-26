@@ -5,12 +5,11 @@ namespace Rougin\Credo\Traits;
 use Rougin\Credo\Credo;
 
 /**
- * Credo Trait
- *
  * @method string table()
  *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 trait CredoTrait
 {
@@ -22,7 +21,8 @@ trait CredoTrait
     /**
      * Sets the Credo instance.
      *
-     * @param  \Rougin\Credo\Credo $credo
+     * @param \Rougin\Credo\Credo $credo
+     *
      * @return self
      */
     public function credo(Credo $credo)
@@ -35,10 +35,11 @@ trait CredoTrait
     /**
      * Finds the row from storage based on given identifier.
      *
-     * @param  mixed        $id
-     * @param  integer|null $mode
-     * @param  integer|null $version
-     * @return mixed
+     * @param integer      $id
+     * @param integer|null $mode
+     * @param integer|null $version
+     *
+     * @return object|null
      */
     public function find($id, $mode = null, $version = null)
     {
@@ -48,27 +49,28 @@ trait CredoTrait
     /**
      * Finds models by a set of criteria.
      *
-     * @param  array        $criteria
-     * @param  integer|null $limit
-     * @param  integer|null $offset
-     * @param  array|null   $order
-     * @return array
+     * @param array<string, mixed>       $criteria
+     * @param array<string, string>|null $order
+     * @param integer|null               $limit
+     * @param integer|null               $offset
+     *
+     * @return object[]
      */
-    public function findBy(array $criteria = array(), $limit = null, $offset = null, array $order = null)
+    public function findBy($criteria = array(), $order = null, $limit = null, $offset = null)
     {
-        return $this->credo->findBy(get_class($this), $criteria, $limit, $offset, $order);
+        return $this->credo->findBy(get_class($this), $criteria, $order, $limit, $offset);
     }
 
     /**
      * Returns an array of rows from a specified table.
      *
-     * @param  string       $table
-     * @param  integer|null $limit
-     * @param  integer|null $offset
-     * @param  array|null   $order
-     * @return mixed
+     * @param integer|null               $limit
+     * @param integer|null               $offset
+     * @param array<string, string>|null $order
+     *
+     * @return object[]
      */
-    public function get($limit = null, $offset = null, array $order = null)
+    public function get($limit = null, $offset = null, $order = null)
     {
         return $this->credo->get(get_class($this), $limit, $offset, $order);
     }
@@ -76,8 +78,9 @@ trait CredoTrait
     /**
      * Sets the "WHERE" criteria.
      *
-     * @param  array|string $key
-     * @param  mixed|null   $value
+     * @param mixed|string $key
+     * @param mixed|null   $value
+     *
      * @return self
      */
     public function where($key, $value = null)

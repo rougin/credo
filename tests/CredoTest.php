@@ -5,10 +5,9 @@ namespace Rougin\Credo;
 use Rougin\SparkPlug\Instance;
 
 /**
- * Credo Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class CredoTest extends Testcase
 {
@@ -28,8 +27,6 @@ class CredoTest extends Testcase
     protected $table = 'post';
 
     /**
-     * Sets up the Codeigniter application.
-     *
      * @return void
      */
     public function doSetUp()
@@ -48,11 +45,9 @@ class CredoTest extends Testcase
     }
 
     /**
-     * Tests Loader::repository.
-     *
      * @return void
      */
-    public function testLoadRepository()
+    public function test_loading_of_repository()
     {
         $this->ci->load->repository(array('post', 'user'));
 
@@ -64,14 +59,13 @@ class CredoTest extends Testcase
     }
 
     /**
-     * Tests Credo::getRepository.
-     *
      * @return void
      */
-    public function testCredo()
+    public function test_repository_instance()
     {
         $credo = new Credo($this->ci->db);
 
+        /** @var \User_repository */
         $user = $credo->get_repository('User');
 
         $result = (array) $user->find_all();

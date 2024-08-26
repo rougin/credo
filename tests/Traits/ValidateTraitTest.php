@@ -6,10 +6,9 @@ use Rougin\Credo\Testcase;
 use Rougin\SparkPlug\Instance;
 
 /**
- * Validate Trait Test
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class ValidateTraitTest extends Testcase
 {
@@ -19,8 +18,6 @@ class ValidateTraitTest extends Testcase
     protected $ci;
 
     /**
-     * Sets up the Codeigniter application.
-     *
      * @return void
      */
     public function doSetUp()
@@ -33,15 +30,13 @@ class ValidateTraitTest extends Testcase
     }
 
     /**
-     * Tests ValidateTrait::validate.
-     *
      * @return void
      */
-    public function testValidateMethod()
+    public function test_validation_errors()
     {
         $expected = array('subject' => 'The Subject field is required.');
 
-        $post = new \Post(array());
+        $post = new \Post;
 
         $post->validate(array('message' => 'test'));
 

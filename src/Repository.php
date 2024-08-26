@@ -5,18 +5,21 @@ namespace Rougin\Credo;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Entity Repository
+ * @template TEntityClass of object
+ * @extends \Doctrine\ORM\EntityRepository<TEntityClass>
  *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Repository extends EntityRepository
 {
     /**
      * Calls methods from EntityRepository in underscore case.
      *
-     * @param  string $method
-     * @param  mixed  $params
+     * @param string  $method
+     * @param mixed[] $params
+     *
      * @return mixed
      */
     public function __call($method, $params)

@@ -2,9 +2,17 @@
 
 All notable changes to `Credo` will be documented in this file.
 
+## [0.6.0](https://github.com/rougin/credo/compare/v0.5.0...v0.6.0) - Unreleased
+
+### Changed
+- Code documentation by `php-cs-fixer`, code quality by `phpstan`
+- Workflow from `Travis CI` to `Github Actions`
+- Code coverage from `Scrutinizer CI` to `Codecov`
+
 ## [0.5.0](https://github.com/rougin/credo/compare/v0.4.0...v0.5.0) - 2018-12-08
 
-**NOTE**: This release will introduce a backward compatability break if upgrading from `v0.4.0` release.
+> [!WARNING]
+> This release will introduce a backward compatability break if upgrading from `v0.4.0` release.
 
 ### Added
 - `CredoTrait`

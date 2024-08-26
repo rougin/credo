@@ -3,4 +3,5 @@
 build
 composer.lock
 docs
+tests/Weblog/application/databases/test.db
 vendor

@@ -3,31 +3,28 @@
 namespace Rougin\Credo;
 
 /**
- * Loader
- *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Loader extends \CI_Loader
 {
     /**
      * Loads and instantiates Doctrine-based repositories.
      *
-     * @param  string|array $repository
+     * @param string|string[] $name
+     *
      * @return self
      */
-    public function repository($repository)
+    public function repository($name)
     {
-        $repositories = (array) $repository;
+        $items = (array) $name;
 
         $path = APPPATH . 'repositories/';
 
-        foreach ($repositories as $repository) {
-            $file = ucfirst($repository);
-
-            $suffix = '_repository.php';
-
-            require $path . $file . $suffix;
+        foreach ($items as $item)
+        {
+            require $path . ucfirst($item) . '_repository.php';
         }
 
         return $this;

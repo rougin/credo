@@ -3,27 +3,26 @@
 namespace Rougin\Credo;
 
 use CI_DB_query_builder as Builder;
-use Doctrine\Common\Util\Inflector;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
 /**
- * Credo
- *
+ * @method \Doctrine\ORM\EntityRepository             get_repository(string $entityName)
  * @method \Doctrine\ORM\EntityRepository             getRepository(string $entityName)
  * @method \Doctrine\ORM\Mapping\ClassMetadataFactory getMetadataFactory()
  * @method \Doctrine\ORM\Query\QueryBuilder           createQueryBuilder()
  * @method object                                     refresh($entity)
- * @method void                                       flush(object|array $entity = null)
+ * @method void                                       flush(object $entity = null)
  * @method void                                       remove(object $entity)
  *
  * @package Credo
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Credo
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $criteria = array();
 
@@ -35,8 +34,9 @@ class Credo
     /**
      * Calls methods from the specified object in underscore case.
      *
-     * @param  string $method
-     * @param  mixed  $params
+     * @param string  $method
+     * @param mixed[] $params
+     *
      * @return mixed
      */
     public function __call($method, $params)
@@ -64,50 +64,54 @@ class Credo
      */
     public function __construct(Builder $builder)
     {
-        $connection = (array) $this->connection($builder);
+        $config = $this->connection($builder);
 
-        $dsn = strpos($connection['dsn'], ':');
+        $driver = $config['driver'];
 
-        $driver = (string) $connection['driver'];
+        $hasDsn = strpos($config['dsn'], ':') !== false;
 
-        if ($driver === 'pdo' && $dsn !== false) {
-            $keys = (array) explode(':', $connection['dsn']);
+        if ($driver === 'pdo' && $hasDsn)
+        {
+            $keys = explode(':', $config['dsn']);
 
-            $connection['driver'] .= (string) '_' . $keys[0];
+            $config['driver'] .= '_' . $keys[0];
         }
 
-        if ($connection['driver'] === 'pdo_sqlite') {
-            $connection['path'] = str_replace('sqlite:', '', $connection['dsn']);
+        if ($config['driver'] === 'pdo_sqlite')
+        {
+            $config['path'] = str_replace('sqlite:', '', $config['dsn']);
         }
 
-        $this->manager = $this->boot($connection, $builder->db_debug);
+        $this->manager = $this->boot($config, $builder->db_debug);
     }
 
     /**
      * Finds the row from storage based on given identifier.
      *
-     * @param  string  $class
-     * @param  integer $id
-     * @param  integer|null $mode
-     * @param  integer|null $version
-     * @return mixed
+     * @param class-string $class
+     * @param integer      $id
+     * @param integer|null $mode
+     * @param integer|null $version
+     *
+     * @return object|null
      */
     public function find($class, $id, $mode = null, $version = null)
     {
-        return $this->manager->getRepository($class)->find($id, $mode, $version);
+        return $this->manager->getRepository($class)->find($id, (int) $mode, $version);
     }
 
     /**
      * Finds models by a set of criteria.
      *
-     * @param  string       $class
-     * @param  array        $criteria
-     * @param  integer|null $offset
-     * @param  array|null   $order
-     * @param  integer|null $limit
-     * @return array
+     * @param class-string               $class
+     * @param array<string, mixed>       $criteria
+     * @param array<string, string>|null $order
+     * @param integer|null               $limit
+     * @param integer|null               $offset
+     *
+     * @return object[]
      */
-    public function findBy($class, array $criteria = array(), array $order = null, $limit = null, $offset = null)
+    public function findBy($class, $criteria = array(), $order = null, $limit = null, $offset = null)
     {
         $repository = $this->manager->getRepository((string) $class);
 
@@ -115,17 +119,20 @@ class Credo
     }
 
     /**
-     * Returns an array of rows from a specified class.
+     * Returns an array of rows from a specified table.
      *
-     * @param  string       $class
-     * @param  integer|null $limit
-     * @param  integer|null $offset
-     * @param  array|null   $order
-     * @return mixed
+     * @param class-string               $class
+     * @param integer|null               $limit
+     * @param integer|null               $offset
+     * @param array<string, string>|null $order
+     *
+     * @return object[]
      */
-    public function get($class, $limit = null, $offset = null, array $order = null)
+    public function get($class, $limit = null, $offset = null, $order = null)
     {
-        ($criteria = (array) $this->criteria) && $this->criteria = array();
+        $criteria = $this->criteria;
+
+        $this->criteria = array();
 
         return $this->findBy($class, $criteria, $order, $limit, $offset);
     }
@@ -133,17 +140,21 @@ class Credo
     /**
      * Sets the "WHERE" criteria.
      *
-     * @param  array|string $key
-     * @param  mixed|null   $value
+     * @param mixed|string $key
+     * @param mixed|null   $value
+     *
      * @return self
      */
     public function where($key, $value = null)
     {
-        if (is_array($key) === true) {
+        if (! is_string($key))
+        {
             $this->criteria = (array) $key;
-        } else {
-            $this->criteria[$key] = $value;
+
+            return $this;
         }
+
+        $this->criteria[$key] = $value;
 
         return $this;
     }
@@ -151,11 +162,12 @@ class Credo
     /**
      * Bootstraps the EntityManager instance.
      *
-     * @param  array   $connection
-     * @param  boolean $debug
+     * @param array<string, string> $connect
+     * @param boolean               $debug
+     *
      * @return \Doctrine\ORM\EntityManager
      */
-    protected function boot(array $connection, $debug = false)
+    protected function boot($connect, $debug = false)
     {
         $proxies = (string) APPPATH . 'models/proxies';
 
@@ -163,34 +175,36 @@ class Credo
 
         array_push($folders, APPPATH . 'repositories');
 
-        // Set $debug to TRUE to disable caching while you develop
+        // Set $debug to TRUE to disable caching during development -----------------------
         $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies);
+        // --------------------------------------------------------------------------------
 
-        return EntityManager::create($connection, $config);
+        return EntityManager::create($connect, $config);
     }
 
     /**
      * Sets up the database configuration from CodeIgniter.
      *
-     * @param  \CI_DB_query_builder $builder
-     * @return array
+     * @param \CI_DB_query_builder $builder
+     *
+     * @return array<string, string>
      */
     protected function connection(Builder $builder)
     {
-        $connection = array('dsn' => $builder->dsn);
+        $data = array('dsn' => $builder->dsn);
 
-        $connection['driver'] = $builder->dbdriver;
+        $data['driver'] = $builder->dbdriver;
 
-        $connection['user'] = $builder->username;
+        $data['user'] = $builder->username;
 
-        $connection['password'] = $builder->password;
+        $data['password'] = $builder->password;
 
-        $connection['host'] = $builder->hostname;
+        $data['host'] = $builder->hostname;
 
-        $connection['dbname'] = $builder->database;
+        $data['dbname'] = $builder->database;
 
-        $connection['charset'] = $builder->char_set;
+        $data['charset'] = $builder->char_set;
 
-        return $connection;
+        return (array) $data;
     }
 }
