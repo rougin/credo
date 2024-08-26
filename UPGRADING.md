@@ -14,16 +14,6 @@ class User extends \Rougin\Credo\CodeigniterModel {}
 class User extends \Rougin\Credo\Model {}
 ```
 
-> [!WARNING]
-> ``` php
-> class User extends \Rougin\Credo\CodeigniterModel {}
-> ```
-
-> [!TIP]
-> ``` php
-> class User extends \Rougin\Credo\Model {}
-> ```
-
 ## Change the `EntityRepository` class to `Repository` class
 
 **Before**
