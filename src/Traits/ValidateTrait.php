@@ -3,9 +3,9 @@
 namespace Rougin\Credo\Traits;
 
 /**
- * @property array               $rules
- * @property \CI_Form_validation $form_validation
- * @property \CI_Loader          $load
+ * @property \CI_Form_validation     $form_validation
+ * @property \CI_Loader              $load
+ * @property array<string, string>[] $rules
  *
  * @package Credo
  *
@@ -31,7 +31,7 @@ trait ValidateTrait
     /**
      * Validates the specified data based on the validation rules.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return boolean
      */
