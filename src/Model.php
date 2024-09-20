@@ -2,6 +2,8 @@
 
 namespace Rougin\Credo;
 
+use Rougin\Credo\Traits\CredoTrait;
+
 /**
  * @property \CI_DB_query_builder $db
  *
@@ -11,7 +13,7 @@ namespace Rougin\Credo;
  */
 class Model extends \CI_Model
 {
-    use Traits\CredoTrait;
+    use CredoTrait;
 
     /**
      * Deletes the specified ID of the model from the database.
@@ -26,9 +28,9 @@ class Model extends \CI_Model
 
         if ($item)
         {
-            $this->credo->remove($item);
+            $this->credo()->remove($item);
 
-            $this->credo->flush();
+            $this->credo()->flush();
         }
     }
 
@@ -51,7 +53,7 @@ class Model extends \CI_Model
 
         $item = $this->find($lastId);
 
-        $this->credo->refresh($item);
+        $this->credo()->refresh($item);
 
         return $lastId;
     }
@@ -76,7 +78,7 @@ class Model extends \CI_Model
 
         $result = $this->db->update($table);
 
-        $this->credo->refresh($this->find($id));
+        $this->credo()->refresh($this->find($id));
 
         return $result;
     }
@@ -90,6 +92,6 @@ class Model extends \CI_Model
      */
     protected function metadata($class)
     {
-        return $this->credo->getMetadataFactory()->getMetadataFor($class);
+        return $this->credo()->getMetadataFactory()->getMetadataFor($class);
     }
 }

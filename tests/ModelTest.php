@@ -39,15 +39,13 @@ class ModelTest extends Testcase
 
         $ci->load->model($table, '', true);
 
-        $ci->post->credo(new Credo($ci->db));
-
         $this->ci = $ci;
     }
 
     /**
      * @return void
      */
-    public function test_delete_from_controller()
+    public function test_delete_from_controller_without_credo()
     {
         $data = array('subject' => 'test', 'message' => 'test');
 
@@ -63,8 +61,28 @@ class ModelTest extends Testcase
     /**
      * @return void
      */
+    public function test_delete_from_controller()
+    {
+        $data = array('subject' => 'test', 'message' => 'test');
+
+        $this->ci->post->credo(new Credo($this->ci->db));
+
+        $id = $this->ci->post->insert($data);
+
+        $this->ci->post->delete((int) $id);
+
+        $post = $this->ci->post->find($id);
+
+        $this->assertTrue(empty($post));
+    }
+
+    /**
+     * @return void
+     */
     public function test_get_with_filter()
     {
+        $this->ci->post->credo(new Credo($this->ci->db));
+
         $this->ci->post->where('description', 'hdcgXrOKUD');
 
         $this->assertCount(1, $this->ci->post->get());
@@ -77,6 +95,8 @@ class ModelTest extends Testcase
     {
         $where = array('description' => 'hdcgXrOKUD');
 
+        $this->ci->post->credo(new Credo($this->ci->db));
+
         $this->ci->post->where((array) $where);
 
         $this->assertCount(1, $this->ci->post->get());
@@ -88,6 +108,8 @@ class ModelTest extends Testcase
     public function test_update_from_controller()
     {
         $data = array('subject' => 'test', 'message' => 'test');
+
+        $this->ci->post->credo(new Credo($this->ci->db));
 
         $this->ci->post->update(3, $data);
 

@@ -14,22 +14,30 @@ use Rougin\Credo\Credo;
 trait CredoTrait
 {
     /**
-     * @var \Rougin\Credo\Credo
+     * @var \Rougin\Credo\Credo|null
      */
-    protected $credo;
+    protected $self = null;
 
     /**
-     * Sets the Credo instance.
+     * Returns or sets the Credo instance.
      *
-     * @param \Rougin\Credo\Credo $credo
+     * @param \Rougin\Credo\Credo|null $credo
      *
-     * @return self
+     * @return \Rougin\Credo\Credo
      */
-    public function credo(Credo $credo)
+    public function credo(Credo $credo = null)
     {
-        $this->credo = $credo;
+        if ($credo)
+        {
+            $this->self = $credo;
+        }
 
-        return $this;
+        if (! $this->self)
+        {
+            $this->self = new Credo($this->db);
+        }
+
+        return $this->self;
     }
 
     /**
@@ -43,7 +51,7 @@ trait CredoTrait
      */
     public function find($id, $mode = null, $version = null)
     {
-        return $this->credo->find(get_class($this), $id, $mode, $version);
+        return $this->credo()->find(get_class($this), $id, $mode, $version);
     }
 
     /**
@@ -58,7 +66,7 @@ trait CredoTrait
      */
     public function findBy($criteria = array(), $order = null, $limit = null, $offset = null)
     {
-        return $this->credo->findBy(get_class($this), $criteria, $order, $limit, $offset);
+        return $this->credo()->findBy(get_class($this), $criteria, $order, $limit, $offset);
     }
 
     /**
@@ -72,7 +80,7 @@ trait CredoTrait
      */
     public function get($limit = null, $offset = null, $order = null)
     {
-        return $this->credo->get(get_class($this), $limit, $offset, $order);
+        return $this->credo()->get(get_class($this), $limit, $offset, $order);
     }
 
     /**
@@ -85,7 +93,7 @@ trait CredoTrait
      */
     public function where($key, $value = null)
     {
-        $this->credo->where($key, $value);
+        $this->credo()->where($key, $value);
 
         return $this;
     }
