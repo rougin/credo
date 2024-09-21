@@ -39,4 +39,127 @@ class Repository extends EntityRepository
 
         return call_user_func_array($class, $params);
     }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Creates a new row of data to the database.
+     *
+     * @param array<string, mixed> $data
+     * @param object               $entity
+     *
+     * @return void
+     */
+    public function create($data, $entity)
+    {
+        $entity = $this->set($data, $entity);
+
+        $this->_em->persist($entity);
+
+        $this->_em->flush();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Deletes the specified item from the database.
+     *
+     * @param object $entity
+     *
+     * @return void
+     */
+    public function delete($entity)
+    {
+        $this->_em->remove($entity);
+
+        $this->_em->flush();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Checks if the specified data exists in the database.
+     *
+     * @param array<string, mixed> $data
+     * @param integer|null         $id
+     *
+     * @return boolean
+     */
+    public function exists($data, $id = null)
+    {
+        // Specify logic here if applicable ---
+        // ------------------------------------
+
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Returns an array of rows from the entity.
+     *
+     * @param integer|null $limit
+     * @param integer|null $offset
+     *
+     * @return object[]
+     */
+    public function get($limit = null, $offset = null)
+    {
+        return $this->findBy(array(), null, $limit, $offset);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Updates the payload to be passed to the entity.
+     *
+     * @param array<string, mixed> $data
+     * @param object               $entity
+     * @param integer|null         $id
+     *
+     * @return object
+     */
+    public function set($data, $entity, $id = null)
+    {
+        // List editable fields from table ---
+        // -----------------------------------
+
+        return $entity;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Returns the total rows from the specified table.
+     *
+     * @return integer
+     */
+    public function total()
+    {
+        return $this->count(array());
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
+     * Updates the specified data to the database.
+     *
+     * @param object               $entity
+     * @param array<string, mixed> $data
+     *
+     * @return void
+     */
+    public function update($entity, $data)
+    {
+        $entity = $this->set($data, $entity);
+
+        $this->_em->flush();
+    }
 }
