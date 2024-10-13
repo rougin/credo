@@ -81,6 +81,44 @@ class Repository extends EntityRepository
      * @codeCoverageIgnore
      * TODO: Create unit test for this method.
      *
+     * Returns an array of entities in dropdown format.
+     *
+     * @param string $column
+     *
+     * @return string[]
+     */
+    public function dropdown($column, $id = 'get_id')
+    {
+        $data = array();
+
+        foreach ($this->get() as $item)
+        {
+            // Return the value from the primary key ---
+            /** @var callable */
+            $class = array($item, $id);
+
+            /** @var integer */
+            $id = call_user_func_array($class, array());
+            // -----------------------------------------
+
+            // Return the value from the defined column ---
+            /** @var callable */
+            $class = array($item, 'get_' . $column);
+
+            /** @var integer */
+            $text = call_user_func_array($class, array());
+            // --------------------------------------------
+
+            $data[$id] = ucwords($text);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * TODO: Create unit test for this method.
+     *
      * Checks if the specified data exists in the database.
      *
      * @param array<string, mixed> $data
