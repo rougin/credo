@@ -14,6 +14,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class Repository extends EntityRepository
 {
+    const CREATED_AT = 'created_at';
+
+    const UPDATED_AT = 'updated_at';
+
     /**
      * Calls methods from EntityRepository in underscore case.
      *
@@ -55,9 +59,21 @@ class Repository extends EntityRepository
     {
         $entity = $this->set($data, $entity);
 
-        $this->_em->persist($entity);
+        // Perform "set_created_at" if it exists in the model ---
+        $method = 'set_' . static::CREATED_AT;
 
-        $this->_em->flush();
+        if (method_exists($entity, $method))
+        {
+            /** @var callable */
+            $class = array($entity, $method);
+
+            $params = array(new \DateTime);
+
+            $entity = call_user_func_array($class, $params);
+        }
+        // ------------------------------------------------------
+
+        $this->_em->persist($entity);
     }
 
     /**
@@ -73,8 +89,6 @@ class Repository extends EntityRepository
     public function delete($entity)
     {
         $this->_em->remove($entity);
-
-        $this->_em->flush();
     }
 
     /**
@@ -132,6 +146,16 @@ class Repository extends EntityRepository
         // ------------------------------------
 
         return false;
+    }
+
+    /**
+     * Flushes all changes in objects to the database.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->_em->flush();
     }
 
     /**
@@ -198,6 +222,18 @@ class Repository extends EntityRepository
     {
         $entity = $this->set($data, $entity);
 
-        $this->_em->flush();
+        // Perform "set_updated_at" if it exists in the model ---
+        $method = 'set_' . static::UPDATED_AT;
+
+        if (method_exists($entity, $method))
+        {
+            /** @var callable */
+            $class = array($entity, $method);
+
+            $params = array(new \DateTime);
+
+            $entity = call_user_func_array($class, $params);
+        }
+        // ------------------------------------------------------
     }
 }

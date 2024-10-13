@@ -8,6 +8,7 @@ All notable changes to `Credo` will be documented in this file.
 - `$pagee` for customizing pagination in `PaginateTrait`
 - Methods in `Repository` related to CRUD operations
 - `Repository::dropdown` for getting results as dropdowns
+- `CREATED_AT`, `UPDATED_AT` constants for timestamps
 
 ### Changed
 - `CredoTrait::credo` returns the `Credo` instance
