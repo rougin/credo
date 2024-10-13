@@ -93,13 +93,13 @@ class Repository extends EntityRepository
 
         foreach ($this->get() as $item)
         {
-            // Return the value from the primary key ---
+            // Return the value from the primary key ----
             /** @var callable */
             $class = array($item, $id);
 
             /** @var integer */
-            $id = call_user_func_array($class, array());
-            // -----------------------------------------
+            $key = call_user_func_array($class, array());
+            // ------------------------------------------
 
             // Return the value from the defined column ---
             /** @var callable */
@@ -109,7 +109,7 @@ class Repository extends EntityRepository
             $text = call_user_func_array($class, array());
             // --------------------------------------------
 
-            $data[$id] = ucwords($text);
+            $data[$key] = ucwords($text);
         }
 
         return $data;
