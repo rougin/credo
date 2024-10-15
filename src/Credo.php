@@ -3,6 +3,7 @@
 namespace Rougin\Credo;
 
 use CI_DB_query_builder as Builder;
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
@@ -162,12 +163,14 @@ class Credo
     /**
      * Bootstraps the EntityManager instance.
      *
-     * @param array<string, string> $connect
-     * @param boolean               $debug
+     * @param array<string, string>        $connect
+     * @param boolean                      $debug
+     * @param \Doctrine\Common\Cache\Cache $cache
+     * @param boolean                      $simple
      *
      * @return \Doctrine\ORM\EntityManager
      */
-    protected function boot($connect, $debug = false)
+    protected function boot($connect, $debug = false, Cache $cache = null, $simple = true)
     {
         $proxies = (string) APPPATH . 'models/proxies';
 
@@ -176,7 +179,7 @@ class Credo
         array_push($folders, APPPATH . 'repositories');
 
         // Set $debug to TRUE to disable caching during development -----------------------
-        $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies);
+        $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies, $cache, $simple);
         // --------------------------------------------------------------------------------
 
         return EntityManager::create($connect, $config);
