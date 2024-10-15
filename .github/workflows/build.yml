@@ -54,19 +54,19 @@ jobs:
 
     - name: Install third-party packages for PHP 8.0
       if: ${{ matrix.php-versions == '8.0' }}
-      run: composer require doctrine/annotations symfony/cache --dev
+      run: composer require doctrine/annotations:~1.0 symfony/cache --dev
 
     - name: Install third-party packages for PHP 8.1
       if: ${{ matrix.php-versions == '8.1' }}
-      run: composer require doctrine/annotations symfony/cache --dev
+      run: composer require doctrine/annotations:~1.0 symfony/cache --dev
 
     - name: Install third-party packages for PHP 8.2
       if: ${{ matrix.php-versions == '8.2' }}
-      run: composer require doctrine/annotations symfony/cache --dev
+      run: composer require doctrine/annotations:~1.0 symfony/cache --dev
 
     - name: Install third-party packages for PHP 8.3
       if: ${{ matrix.php-versions == '8.3' }}
-      run: composer require doctrine/annotations symfony/cache --dev
+      run: composer require doctrine/annotations:~1.0 symfony/cache --dev
 
     - name: Run test suite
       run: vendor/bin/phpunit --coverage-clover=coverage.clover
