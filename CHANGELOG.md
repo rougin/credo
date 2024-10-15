@@ -8,13 +8,15 @@ All notable changes to `Credo` will be documented in this file.
 - `$pagee` for customizing pagination in `PaginateTrait`
 - Methods in `Repository` related to CRUD operations
 - `Repository::dropdown` for getting results as dropdowns
-- `CREATED_AT`, `UPDATED_AT` constants for timestamps
+- Usage of timestamps (e.g., `CREATED_AT`, `UPDATED_AT`)
 
 ### Changed
-- `CredoTrait::credo` returns the `Credo` instance
-- Code coverage from `Scrutinizer CI` to `Codecov`
-- Code documentation by `php-cs-fixer`, code quality by `phpstan`
-- Workflow from `Travis CI` to `Github Actions`
+- `CredoTrait::credo` returns `Credo` instance
+- Code coverage to `Codecov`
+- Code documentation by `php-cs-fixer`
+- Improved code quality by `phpstan`
+- Simplified code structure
+- Workflow to `Github Actions`
 
 ### Fixed
 - Getting offset value in `PaginateTrait`
