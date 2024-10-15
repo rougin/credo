@@ -58,15 +58,15 @@ jobs:
 
     - name: Install third-party packages for PHP 8.1
       if: ${{ matrix.php-versions == '8.1' }}
-      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 --dev -W --ignore-platform-req php
+      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 doctrine/lexer:~1.0 --dev -W --ignore-platform-req php
 
     - name: Install third-party packages for PHP 8.2
       if: ${{ matrix.php-versions == '8.2' }}
-      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 --dev -W --ignore-platform-req php
+      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 doctrine/lexer:~1.0 --dev -W --ignore-platform-req php
 
     - name: Install third-party packages for PHP 8.3
       if: ${{ matrix.php-versions == '8.3' }}
-      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 --dev -W --ignore-platform-req php
+      run: composer require doctrine/annotations:~1.0 doctrine/cache:~1.0 doctrine/lexer:~1.0 --dev -W --ignore-platform-req php
 
     - name: Run test suite
       run: vendor/bin/phpunit --coverage-clover=coverage.clover
