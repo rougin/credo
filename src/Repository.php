@@ -69,6 +69,7 @@ class Repository extends EntityRepository
 
             $params = array(new \DateTime);
 
+            /** @var object */
             $entity = call_user_func_array($class, $params);
         }
         // ------------------------------------------------------
@@ -98,6 +99,7 @@ class Repository extends EntityRepository
      * Returns an array of entities in dropdown format.
      *
      * @param string $column
+     * @param string $id
      *
      * @return string[]
      */
@@ -119,7 +121,7 @@ class Repository extends EntityRepository
             /** @var callable */
             $class = array($item, 'get_' . $column);
 
-            /** @var integer */
+            /** @var string */
             $text = call_user_func_array($class, array());
             // --------------------------------------------
 
