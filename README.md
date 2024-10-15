@@ -132,6 +132,22 @@ class User_repository extends Repository
 }
 ```
 
+Add the `repositoryClass` property inside the `@Entity` annotation of the specified entity (e.g., `User`) to attach the newly created repository:
+
+``` php
+// application/models/User.php
+
+/**
+ * @Entity(repositoryClass="User_repository")
+ *
+ * @Table(name="user")
+ */
+class User extends CI_Model
+{
+    // ...
+}
+```
+
 Then load the specified repository using `$this->load->repository`:
 
 ``` php
@@ -147,9 +163,9 @@ $this->load->database();
 
 $credo = new Rougin\Credo\Credo($this->db);
 
-// The said repository can now be initialized ---
+// The said repository can now be used ------
 $repository = $credo->get_repository('User');
-// ----------------------------------------------
+// ------------------------------------------
 
 $users = $repository->find_by_something();
 ```
