@@ -16,6 +16,9 @@ All notable changes to `Credo` will be documented in this file.
 - Code documentation by `php-cs-fixer`, code quality by `phpstan`
 - Workflow from `Travis CI` to `Github Actions`
 
+### Fixed
+- Getting offset value in `PaginateTrait`
+
 ## [0.5.0](https://github.com/rougin/credo/compare/v0.4.0...v0.5.0) - 2018-12-08
 
 > [!WARNING]
