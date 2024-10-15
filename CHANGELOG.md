@@ -12,6 +12,7 @@ All notable changes to `Credo` will be documented in this file.
 
 ### Changed
 - `CredoTrait::credo` returns `Credo` instance
+- `Model::delete` returns a `boolean`
 - Code coverage to `Codecov`
 - Code documentation by `php-cs-fixer`
 - Improved code quality by `phpstan`

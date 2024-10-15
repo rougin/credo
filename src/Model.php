@@ -20,18 +20,24 @@ class Model extends \CI_Model
      *
      * @param integer $id
      *
-     * @return void
+     * @return boolean
      */
     public function delete($id)
     {
         $item = $this->find($id);
+
+        $deleted = false;
 
         if ($item)
         {
             $this->credo()->remove($item);
 
             $this->credo()->flush();
+
+            $deleted = true;
         }
+
+        return $deleted;
     }
 
     /**
