@@ -36,4 +36,20 @@ class User extends CI_Model
      * @var string
      */
     protected $_gender;
+
+    /**
+     * @return integer
+     */
+    public function get_id()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_name()
+    {
+        return $this->_name;
+    }
 }

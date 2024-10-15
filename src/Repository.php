@@ -45,9 +45,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Creates a new row of data to the database.
      *
      * @param array<string, mixed> $data
@@ -78,9 +75,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Deletes the specified item from the database.
      *
      * @param object $entity
@@ -93,9 +87,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Returns an array of entities in dropdown format.
      *
      * @param string $column
@@ -125,7 +116,7 @@ class Repository extends EntityRepository
             $text = call_user_func_array($class, array());
             // --------------------------------------------
 
-            $data[$key] = ucwords($text);
+            $data[$key] = $text;
         }
 
         return $data;
@@ -133,7 +124,6 @@ class Repository extends EntityRepository
 
     /**
      * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
      *
      * Checks if the specified data exists in the database.
      *
@@ -161,9 +151,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Returns an array of rows from the entity.
      *
      * @param integer|null $limit
@@ -178,7 +165,6 @@ class Repository extends EntityRepository
 
     /**
      * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
      *
      * Updates the payload to be passed to the entity.
      *
@@ -197,9 +183,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Returns the total rows from the specified table.
      *
      * @return integer
@@ -210,9 +193,6 @@ class Repository extends EntityRepository
     }
 
     /**
-     * @codeCoverageIgnore
-     * TODO: Create unit test for this method.
-     *
      * Updates the specified data to the database.
      *
      * @param object               $entity

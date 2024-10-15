@@ -24,7 +24,7 @@ class Loader extends \CI_Loader
 
         foreach ($items as $item)
         {
-            require $path . ucfirst($item) . '_repository.php';
+            require_once $path . ucfirst($item) . '_repository.php';
         }
 
         return $this;
