@@ -104,7 +104,7 @@ $repository = $credo->get_repository('User');
 $user = $repository->findBy(array());
 ```
 
-### Using `Rougin\Credo\Repository`
+## Using `Rougin\Credo\Repository`
 
 To enable this package on a `Codeigniter 3` project, extend `Rougin\Credo\Loader` to `MY_Loader` first:
 
@@ -116,7 +116,7 @@ class MY_Loader extends \Rougin\Credo\Loader
 }
 ```
 
-Use the suffix `_repository` for creating repositories (e.g., `User_repository`):
+Then kindly use the `_repository` suffix for creating custom repositories (e.g., `User_repository`):
 
 ``` php
 // application/repositories/User_repository.php
@@ -132,7 +132,7 @@ class User_repository extends Repository
 }
 ```
 
-Add the `repositoryClass` property inside the `@Entity` annotation of the specified entity (e.g., `User`) to attach the newly created repository:
+Next is add the `repositoryClass` property inside the `@Entity` annotation of the specified entity (e.g., `User`) to attach the newly created repository:
 
 ``` php
 // application/models/User.php
@@ -171,11 +171,11 @@ $users = $repository->find_by_something();
 ```
 
 > [!NOTE]
-> For more information about repositories in Doctrine, please check its [documentation](http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/working-with-objects.html#custom-repositories).
+> For more information about `Doctrine ORM`, please check its [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions).
 
-### Using `Rougin\Credo\Model`
+## Using `Rougin\Credo\Model`
 
-Using the `Model` class enables the specified model to perform CRUD operations without relying on a repository:
+The `Model` class enables the specified entity (e.g., `User`) to perform CRUD operations without relying on a repository:
 
 ``` php
 // application/models/User.php
@@ -206,13 +206,14 @@ $credo = new Rougin\Credo\Credo($this->db);
 
 $this->user->credo($credo);
 
+/** @var \User[] */
 $users = $this->user->get();
 ```
 
 The specified class contains CRUD operations based on the functionalities from the `Query Builder` class of `Codeigniter 3` and the `EntityManager` of `Doctrine ORM`.
 
-> [!NOTE]
-> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., `flush` is executed directly after updating an entity). With this, using the repository pattern (e.g., `User_repository`) is highly encouraged.
+> [!WARNING]
+> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., `flush` is executed directly after creating or updating an entity). With this, using an entity repository (e.g., `User_repository`) is highly encouraged.
 
 ## Using Traits
 
