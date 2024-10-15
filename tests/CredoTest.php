@@ -57,4 +57,19 @@ class CredoTest extends Testcase
 
         $this->assertTrue($post && $user === true);
     }
+
+    /**
+     * @return void
+     */
+    public function test_repository_instance()
+    {
+        $credo = new Credo($this->ci->db);
+
+        /** @var \User_repository */
+        $user = $credo->get_repository('User');
+
+        $result = (array) $user->find_all();
+
+        $this->assertCount($this->rows, $result);
+    }
 }
