@@ -163,7 +163,7 @@ class Repository extends EntityRepository
      */
     public function total()
     {
-        return $this->count(array());
+        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count(array());
     }
 
     /**
