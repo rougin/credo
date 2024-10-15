@@ -9,6 +9,7 @@ All notable changes to `Credo` will be documented in this file.
 - Methods in `Repository` related to CRUD operations
 - `Repository::dropdown` for getting results as dropdowns
 - Usage of timestamps (e.g., `CREATED_AT`, `UPDATED_AT`)
+- Support the latest version of `doctrine/orm` (`~3.0`)
 
 ### Changed
 - `CredoTrait::credo` returns `Credo` instance
