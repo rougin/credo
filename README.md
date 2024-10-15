@@ -90,6 +90,8 @@ class User extends CI_Model
 }
 ```
 
+Once the entity (e.g., `User`) is created, it can now be used to perform operations using the `Credo::getRepository`:
+
 ``` php
 // application/controllers/Welcome.php
 
@@ -101,6 +103,7 @@ $credo = new Rougin\Credo\Credo($this->db);
 
 $repository = $credo->get_repository('User');
 
+/** @var \User[] */
 $user = $repository->findBy(array());
 ```
 
@@ -171,7 +174,7 @@ $users = $repository->find_by_something();
 ```
 
 > [!NOTE]
-> For more information about `Doctrine ORM`, please check its [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions).
+> It is encouraged to check the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions) about `Doctrine ORM` first for more information about its design patterns and usages.
 
 ## Using `Rougin\Credo\Model`
 
