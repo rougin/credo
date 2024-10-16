@@ -23,6 +23,11 @@ use Doctrine\ORM\Tools\Setup;
 class Credo
 {
     /**
+     * @var \CI_DB_query_builder|null
+     */
+    protected $builder = null;
+
+    /**
      * @var array<string, mixed>
      */
     protected $criteria = array();
@@ -59,31 +64,22 @@ class Credo
     }
 
     /**
-     * Initializes the EntityManager instance.
+     * Initializes EntityManager if Query Builder is defined.
      *
-     * @param \CI_DB_query_builder $builder
+     * @param \CI_DB_query_builder|null $builder
      */
-    public function __construct(Builder $builder)
+    public function __construct(Builder $builder = null)
     {
-        $config = $this->connection($builder);
-
-        $driver = $config['driver'];
-
-        $hasDsn = strpos($config['dsn'], ':') !== false;
-
-        if ($driver === 'pdo' && $hasDsn)
+        if ($builder)
         {
-            $keys = explode(':', $config['dsn']);
+            $config = $this->getConfig($builder);
 
-            $config['driver'] .= '_' . $keys[0];
+            $debug = $builder->db_debug;
+
+            $manager = $this->newManager($config, $debug);
+
+            $this->setManager($manager);
         }
-
-        if ($config['driver'] === 'pdo_sqlite')
-        {
-            $config['path'] = str_replace('sqlite:', '', $config['dsn']);
-        }
-
-        $this->manager = $this->boot($config, $builder->db_debug);
     }
 
     /**
@@ -139,6 +135,48 @@ class Credo
     }
 
     /**
+     * @deprecated since ~0.6, use official implementations from Doctrine instead if using version 3.
+     *
+     * Returns an EntityManager based on Query Builder.
+     * Set $debug to "true" to disable caching during development.
+     *
+     * @param array<string, string>             $connect
+     * @param boolean                           $debug
+     * @param \Doctrine\Common\Cache\Cache|null $cache
+     * @param boolean                           $simple
+     *
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function newManager($connect, $debug = false, Cache $cache = null, $simple = true)
+    {
+        $proxies = (string) APPPATH . 'models/proxies';
+
+        $folders = array((string) APPPATH . 'models');
+
+        array_push($folders, APPPATH . 'repositories');
+
+        // Set $debug to TRUE to disable caching during development ----------------------------------------
+        $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies, $cache, $simple);
+        // -------------------------------------------------------------------------------------------------
+
+        return EntityManager::create($connect, $config);
+    }
+
+    /**
+     * Sets the EntityManager instance.
+     *
+     * @param \Doctrine\ORM\EntityManager $manager
+     *
+     * @return self
+     */
+    public function setManager(EntityManager $manager)
+    {
+        $this->manager = $manager;
+
+        return $this;
+    }
+
+    /**
      * Sets the "WHERE" criteria.
      *
      * @param mixed|string $key
@@ -161,38 +199,13 @@ class Credo
     }
 
     /**
-     * Bootstraps the EntityManager instance.
-     *
-     * @param array<string, string>        $connect
-     * @param boolean                      $debug
-     * @param \Doctrine\Common\Cache\Cache $cache
-     * @param boolean                      $simple
-     *
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function boot($connect, $debug = false, Cache $cache = null, $simple = true)
-    {
-        $proxies = (string) APPPATH . 'models/proxies';
-
-        $folders = array((string) APPPATH . 'models');
-
-        array_push($folders, APPPATH . 'repositories');
-
-        // Set $debug to TRUE to disable caching during development -----------------------
-        $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies, $cache, $simple);
-        // --------------------------------------------------------------------------------
-
-        return EntityManager::create($connect, $config);
-    }
-
-    /**
-     * Sets up the database configuration from CodeIgniter.
+     * Sets up the database configuration from Codeigniter.
      *
      * @param \CI_DB_query_builder $builder
      *
      * @return array<string, string>
      */
-    protected function connection(Builder $builder)
+    protected function getConfig(Builder $builder)
     {
         $data = array('dsn' => $builder->dsn);
 
@@ -208,6 +221,20 @@ class Credo
 
         $data['charset'] = $builder->char_set;
 
-        return (array) $data;
+        $hasDsn = strpos($data['dsn'], ':') !== false;
+
+        if ($data['driver'] === 'pdo' && $hasDsn)
+        {
+            $keys = explode(':', $data['dsn']);
+
+            $data['driver'] .= '_' . $keys[0];
+        }
+
+        if ($data['driver'] === 'pdo_sqlite')
+        {
+            $data['path'] = str_replace('sqlite:', '', $data['dsn']);
+        }
+
+        return $data;
     }
 }

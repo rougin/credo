@@ -16,4 +16,4 @@ parameters:
     - '#^Constant APPPATH not found\.$#'
     - '#^Method Rougin\\Credo\\Model\:\:metadata\(\) return type with generic class Doctrine\\ORM\\Mapping\\ClassMetadata does not specify its types\: T$#'
     - '#^Parameter \#2 \$lockMode of method Doctrine\\ORM\\EntityRepository\<object\>\:\:find\(\) expects 0\|1\|2\|4\|null, int\|null given\.$#'
-    - '#^Parameter \#1 \$builder of class Rougin\\Credo\\Credo constructor expects CI_DB_query_builder, CI_DB given\.$#'
+    - '#^Parameter \#1 \$builder of class Rougin\\Credo\\Credo constructor expects CI_DB_query_builder\|null, CI_DB given\.$#'

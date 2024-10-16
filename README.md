@@ -95,11 +95,13 @@ Once the entity (e.g., `User`) is created, it can now be used to perform operati
 ``` php
 // application/controllers/Welcome.php
 
+use Rougin\Credo\Credo;
+
 $this->load->model('user');
 
 $this->load->database();
 
-$credo = new Rougin\Credo\Credo($this->db);
+$credo = new Credo($this->db);
 
 $repository = $credo->get_repository('User');
 
@@ -156,6 +158,8 @@ Then load the specified repository using `$this->load->repository`:
 ``` php
 // application/controllers/Welcome.php
 
+use Rougin\Credo\Credo;
+
 $this->load->model('user');
 
 // Loads the customized repository ---
@@ -164,7 +168,7 @@ $this->load->repository('user');
 
 $this->load->database();
 
-$credo = new Rougin\Credo\Credo($this->db);
+$credo = new Credo($this->db);
 
 // The said repository can now be used ------
 $repository = $credo->get_repository('User');
@@ -175,6 +179,40 @@ $users = $repository->find_by_something();
 
 > [!NOTE]
 > It is encouraged to check the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions) about `Doctrine ORM` first for more information about its design patterns and usages.
+
+## Using the latest version of `Doctrine ORM`
+
+`Credo` should be able to support the latest version of `Doctrine ORM` (`~3.0`). To use the latest version, the code must be slightly updated:
+
+``` php
+// application/controllers/Welcome.php
+
+use Rougin\Credo\Credo;
+
+// ...
+
+// $this->db must not be included ---
+$credo = new Credo;
+// ----------------------------------
+
+// Create an implementation of EntityManager ---
+$manager = /** sample implementation */;
+// ---------------------------------------------
+
+// Then attach it to the Credo instance ---
+$credo->setManager($manager);
+// ----------------------------------------
+
+// ...
+
+/** @var \User[] */
+$users = $this->user->get();
+```
+
+Using this approach enables the drivers provided by `Doctrine ORM` in its latest versions like the native attributes introduced in PHP `v8.1`.
+
+> [!TIP]
+> Please see the [Getting Started](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html) documentation of `Doctrine ORM` on how to initialize an `EntityManager` in the latest version.
 
 ## Using `Rougin\Credo\Model`
 
@@ -203,9 +241,11 @@ class User extends \Rougin\Credo\Model
 ``` php
 // application/controllers/Welcome.php
 
-$this->load->model('user', '', TRUE);
+use Rougin\Credo\Credo;
 
-$credo = new Rougin\Credo\Credo($this->db);
+$this->load->model('user');
+
+$credo = new Credo($this->db);
 
 $this->user->credo($credo);
 
