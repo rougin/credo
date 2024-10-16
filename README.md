@@ -244,16 +244,18 @@ class User
 
 ## Using `Rougin\Credo\Model`
 
-The `Model` class enables the specified entity to perform CRUD operations without relying on a repository (e.g., `User`):
+The `Model` class enables the specified entity to perform CRUD operations without relying on a repository:
 
 ``` php
 // application/models/User.php
+
+use Rougin\Credo\Model;
 
 /**
  * @Entity
  * @Table(name="user")
  */
-class User extends \Rougin\Credo\Model
+class User extends Model
 {
     /**
      * @Id @GeneratedValue
@@ -300,9 +302,10 @@ The `PaginateTrait` is used to easily create pagination links within the model:
 ``` php
 // application/models/User.php
 
+use Rougin\Credo\Model;
 use Rougin\Credo\Traits\PaginateTrait;
 
-class User extends \Rougin\Credo\Model
+class User extends Model
 {
     use PaginateTrait;
 
@@ -339,9 +342,10 @@ To configure the pagination library, the `$pagee` property must be defined in th
 ``` php
 // application/models/User.php
 
+use Rougin\Credo\Model;
 use Rougin\Credo\Traits\PaginateTrait;
 
-class User extends \Rougin\Credo\Model
+class User extends Model
 {
     use PaginateTrait;
 
@@ -373,9 +377,10 @@ This trait is used to simplify the specifying of validation rules to a model:
 ``` php
 // application/models/User.php
 
+use Rougin\Credo\Model;
 use Rougin\Credo\Traits\ValidateTrait;
 
-class User extends \Rougin\Credo\Model
+class User extends Model
 {
     use ValidateTrait;
 
@@ -388,9 +393,10 @@ When used, the `$rules` property of the model must be defined with validation ru
 ``` php
 // application/models/User.php
 
+use Rougin\Credo\Model;
 use Rougin\Credo\Traits\ValidateTrait;
 
-class User extends \Rougin\Credo\Model
+class User extends Model
 {
     use ValidateTrait;
 
