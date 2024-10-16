@@ -6,7 +6,7 @@
 [![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Credo is a packages that acts as a wrapper of [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) to a [Codeigniter 3](https://codeigniter.com/userguide3/) project. This package was created based on the official [integration for Codeigniter 3](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine` package.
+Credo is a packages that acts as a wrapper of [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) to a [Codeigniter 3](https://codeigniter.com/userguide3/) project. This package was created based on the official [integration for Codeigniter 3](https://web.archive.org/web/20180624142647/https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine ORM` package.
 
 ## Installation
 
