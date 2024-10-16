@@ -124,7 +124,7 @@ class MY_Loader extends Loader
 }
 ```
 
-Nex is create a custom entity repository with a `_repository` suffix in the class name (e.g., `User_repository`):
+Next is create a custom entity repository with a `_repository` suffix in the class name (e.g., `User_repository`):
 
 ``` php
 // application/repositories/User_repository.php
