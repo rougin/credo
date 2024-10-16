@@ -289,7 +289,7 @@ $users = $this->user->get();
 The `Model` class contains methods for performing CRUD operations which are based both on the `Query Builder` class of `Codeigniter 3` and the `EntityManager` of `Doctrine ORM`.
 
 > [!WARNING]
-> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., using the entity class instead of an array in updating its data). With this, using an entity repository is highly encouraged (e.g., `User_repository`).
+> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., using the entity class instead of an array in updating its data). With this, using an entity repository is highly encouraged.
 
 ## Using Traits
 
