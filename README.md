@@ -18,9 +18,7 @@ $ composer require rougin/credo
 
 ## Basic Usage
 
-### Prerequisites
-
-Create a sample database table to be used (e.g., `users`):
+Create a sample database table first to be used in this example (e.g., `users`):
 
 ``` sql
 -- Import this script to a SQLite database
@@ -66,9 +64,9 @@ $config['composer_autoload'] = __DIR__ . '/../../vendor/autoload.php';
 ```
 
 > [!NOTE]
-> Its value should be the path of the `vendor` directory.
+> Its value should be the path of the `vendor` directory of the current project.
 
-Next is to create any model that conforms to the `Doctrine` documentation:
+Next is to create an entity that conforms to the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#an-example-model-bug-tracker) of `Doctrine ORM` (e.g., `User`):
 
 ``` php
 // application/models/User.php
@@ -90,7 +88,7 @@ class User extends CI_Model
 }
 ```
 
-Once the entity (e.g., `User`) is created, it can now be used to perform operations using the `Credo::getRepository`:
+Once the entity is created, it can now be used to perform operations using the `Credo::getRepository`:
 
 ``` php
 // application/controllers/Welcome.php
@@ -103,7 +101,10 @@ $this->load->database();
 
 $credo = new Credo($this->db);
 
+// Snake-case versions of the EntityManager ---
+// methods are also available in the class ----
 $repository = $credo->get_repository('User');
+// --------------------------------------------
 
 /** @var \User[] */
 $user = $repository->findBy(array());
@@ -111,17 +112,19 @@ $user = $repository->findBy(array());
 
 ## Using `Rougin\Credo\Repository`
 
-To enable this package on a `Codeigniter 3` project, extend `Rougin\Credo\Loader` to `MY_Loader` first:
+To enable this package on a `Codeigniter 3` project, create a `MY_Loader` class first in the `core` directory then extend the newly created class to `Rougin\Credo\Loader`:
 
 ``` php
 // application/core/MY_Loader.php
 
-class MY_Loader extends \Rougin\Credo\Loader
+use Rougin\Credo\Loader;
+
+class MY_Loader extends Loader
 {
 }
 ```
 
-Then kindly use the `_repository` suffix for creating custom repositories (e.g., `User_repository`):
+Nex is create a custom entity repository with a `_repository` suffix in the class name (e.g., `User_repository`):
 
 ``` php
 // application/repositories/User_repository.php
@@ -137,7 +140,7 @@ class User_repository extends Repository
 }
 ```
 
-Next is add the `repositoryClass` property inside the `@Entity` annotation of the specified entity (e.g., `User`) to attach the newly created repository:
+Once the custom repository is created (e.g., `User_repository`), add the `repositoryClass` property inside the `@Entity` annotation of the specified entity to attach the said custom repository:
 
 ``` php
 // application/models/User.php
@@ -160,13 +163,13 @@ Then load the specified repository using `$this->load->repository`:
 
 use Rougin\Credo\Credo;
 
+// Load the model and its repository ---
 $this->load->model('user');
 
-// Loads the customized repository ---
 $this->load->repository('user');
-// -----------------------------------
 
 $this->load->database();
+// -------------------------------------
 
 $credo = new Credo($this->db);
 
@@ -178,9 +181,9 @@ $users = $repository->find_by_something();
 ```
 
 > [!NOTE]
-> It is encouraged to check the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions) about `Doctrine ORM` first for more information about its design patterns and usages.
+> It is encouraged to check the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#guide-assumptions) about `Doctrine ORM` first for more information about its design pattern and its various usage on existing projects.
 
-## Using the latest version of `Doctrine ORM`
+## Using `~3.0` version of `Doctrine ORM`
 
 `Credo` should be able to support the latest version of `Doctrine ORM` (`~3.0`). To use the latest version, the code must be slightly updated:
 
@@ -191,9 +194,11 @@ use Rougin\Credo\Credo;
 
 // ...
 
-// $this->db must not be included ---
+// $this->db must not be included as it ----
+// will create an EntityManager instance ---
+// based from the given Database object ----
 $credo = new Credo;
-// ----------------------------------
+// -----------------------------------------
 
 // Create an implementation of EntityManager ---
 $manager = /** sample implementation */;
@@ -216,7 +221,7 @@ Using this approach enables the drivers provided by `Doctrine ORM` in its latest
 
 ## Using `Rougin\Credo\Model`
 
-The `Model` class enables the specified entity (e.g., `User`) to perform CRUD operations without relying on a repository:
+The `Model` class enables the specified entity to perform CRUD operations without relying on a repository (e.g., `User`):
 
 ``` php
 // application/models/User.php
@@ -245,18 +250,21 @@ use Rougin\Credo\Credo;
 
 $this->load->model('user');
 
-$credo = new Credo($this->db);
+// Credo is not needed as it will try to ---
+// create an instance based on $this->db ---
+// $credo = new Credo($this->db);
 
-$this->user->credo($credo);
+// $this->user->credo($credo);
+// -----------------------------------------
 
 /** @var \User[] */
 $users = $this->user->get();
 ```
 
-The specified class contains CRUD operations based on the functionalities from the `Query Builder` class of `Codeigniter 3` and the `EntityManager` of `Doctrine ORM`.
+The `Model` class contains methods for performing CRUD operations which are based both on the `Query Builder` class of `Codeigniter 3` and the `EntityManager` of `Doctrine ORM`.
 
 > [!WARNING]
-> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., `flush` is executed directly after creating or updating an entity). With this, using an entity repository (e.g., `User_repository`) is highly encouraged.
+> This may be used for getting started to use the models directly without a repository. However, this will be against the principle of `Unit of Work` pattern by `Doctrine ORM` (e.g., using the entity class instead of an array in updating its data). With this, using an entity repository is highly encouraged (e.g., `User_repository`).
 
 ## Using Traits
 
