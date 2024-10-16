@@ -103,6 +103,7 @@ $credo = new Credo($this->db);
 
 // Snake-case versions of the EntityManager ---
 // methods are also available in the class ----
+/** @var \Doctrine\ORM\EntityRepository */
 $repository = $credo->get_repository('User');
 // --------------------------------------------
 
@@ -174,6 +175,7 @@ $this->load->database();
 $credo = new Credo($this->db);
 
 // The said repository can now be used ------
+/** @var \User_repository */
 $repository = $credo->get_repository('User');
 // ------------------------------------------
 
@@ -214,7 +216,28 @@ $credo->setManager($manager);
 $users = $this->user->get();
 ```
 
-Using this approach enables the drivers provided by `Doctrine ORM` in its latest versions like the native attributes introduced in PHP `v8.1`.
+Using this approach allows to use the latest improvements provided by `Doctrine ORM` like using the native attributes introduced in PHP `v8.1`:
+
+``` php
+// application/models/User.php
+
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'users')]
+class User
+{
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
+    private int|null $id = null;
+
+    #[ORM\Column(type: 'string')]
+    private string $name;
+
+    // ...
+}
+```
 
 > [!TIP]
 > Please see the [Getting Started](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html) documentation of `Doctrine ORM` on how to initialize an `EntityManager` in the latest version.
