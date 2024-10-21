@@ -1,6 +1,6 @@
 {
   "name": "rougin/credo",
-  "description": "A Doctrine ORM wrapper for Codeigniter 3.",
+  "description": "Doctrine ORM wrapper for Codeigniter 3.",
   "keywords": [ "codeigniter", "credo", "doctrine", "orm" ],
   "homepage": "https://roug.in/credo/",
   "license": "MIT",
@@ -52,11 +52,11 @@
   },
   "suggest":
   {
-    "rougin/codeigniter": "Codeigniter 3's Composer-based package.",
-    "rougin/combustor": "A simple CRUD generator for Codeigniter 3.",
-    "rougin/credo": "A Doctrine ORM wrapper for Codeigniter 3.",
-    "rougin/ignite": "Codeigniter 3 as a Composer-based project.",
-    "rougin/refinery": "Database migrations for Codeigniter 3.",
-    "rougin/wildfire": "A Query Builder wrapper for Codeigniter 3."
+    "rougin/codeigniter": "Packaged \"system\" of Codeigniter 3.",
+    "rougin/combustor": "MVC code generator for Codeigniter 3.",
+    "rougin/ignite": "Yet another Codeigniter 3 project template.",
+    "rougin/refinery": "\"Ready-to-eat\" Codeigniter 3 migrations.",
+    "rougin/spark-plug": "Codeigniter 3 projects as variables.",
+    "rougin/wildfire": "Query Builder wrapper for Codeigniter 3."
   }
 }
