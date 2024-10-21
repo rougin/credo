@@ -6,7 +6,7 @@
 [![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Credo is a packages that acts as a wrapper of [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) to a [Codeigniter 3](https://codeigniter.com/userguide3/) project. This package was created based on the official [integration for Codeigniter 3](https://web.archive.org/web/20180624142647/https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine ORM` package.
+Credo is a wrapper package of [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) for [Codeigniter 3](https://codeigniter.com/userguide3/). Its implementation was created based on the official [integration for Codeigniter 3](https://web.archive.org/web/20180624142647/https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/cookbook/integrating-with-codeigniter.html) to the `Doctrine ORM` package.
 
 ## Installation
 
@@ -38,7 +38,7 @@ INSERT INTO user (name, age, gender) VALUES ('Mei', 19, 'female');
 Then configure the `composer_autoload` option in `config.php`:
 
 ``` php
-// application/config/config.php
+// ciacme/application/config/config.php
 
 /*
 |--------------------------------------------------------------------------
@@ -64,12 +64,12 @@ $config['composer_autoload'] = __DIR__ . '/../../vendor/autoload.php';
 ```
 
 > [!NOTE]
-> Its value should be the path of the `vendor` directory of the current project.
+> The value of `composer_autoload` should be the `vendor` directory (e.g., `ciacme/vendor/autoload.php`).
 
 Next is to create an entity that conforms to the [documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/current/tutorials/getting-started.html#an-example-model-bug-tracker) of `Doctrine ORM` (e.g., `User`):
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 /**
  * @Entity
@@ -91,7 +91,7 @@ class User extends CI_Model
 Once the entity is created, it can now be used to perform operations using the `Credo::getRepository`:
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 use Rougin\Credo\Credo;
 
@@ -116,7 +116,7 @@ $user = $repository->findBy(array());
 To enable this package on a `Codeigniter 3` project, create a `MY_Loader` class first in the `core` directory then extend the newly created class to `Rougin\Credo\Loader`:
 
 ``` php
-// application/core/MY_Loader.php
+// ciacme/application/core/MY_Loader.php
 
 use Rougin\Credo\Loader;
 
@@ -128,7 +128,7 @@ class MY_Loader extends Loader
 Next is create a custom entity repository with a `_repository` suffix in the class name (e.g., `User_repository`):
 
 ``` php
-// application/repositories/User_repository.php
+// ciacme/application/repositories/User_repository.php
 
 use Rougin\Credo\Repository;
 
@@ -144,7 +144,7 @@ class User_repository extends Repository
 Once the custom repository is created (e.g., `User_repository`), add the `repositoryClass` property inside the `@Entity` annotation of the specified entity to attach the said custom repository:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 /**
  * @Entity(repositoryClass="User_repository")
@@ -160,7 +160,7 @@ class User extends CI_Model
 Then load the specified repository using `$this->load->repository`:
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 use Rougin\Credo\Credo;
 
@@ -190,7 +190,7 @@ $users = $repository->find_by_something();
 `Credo` should be able to support the latest version of `Doctrine ORM` (`~3.0`). To use the latest version, the code must be slightly updated:
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 use Rougin\Credo\Credo;
 
@@ -219,7 +219,7 @@ $users = $this->user->get();
 Using this approach allows to use the latest improvements provided by `Doctrine ORM` like using the native attributes introduced in PHP `v8.1`:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -247,7 +247,7 @@ class User
 The `Model` class enables the specified entity to perform CRUD operations without relying on a repository:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Rougin\Credo\Model;
 
@@ -269,7 +269,7 @@ class User extends Model
 ```
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 use Rougin\Credo\Credo;
 
@@ -300,7 +300,7 @@ The `Model` class contains methods for performing CRUD operations which are base
 The `PaginateTrait` is used to easily create pagination links within the model:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Rougin\Credo\Model;
 use Rougin\Credo\Traits\PaginateTrait;
@@ -314,7 +314,7 @@ class User extends Model
 ```
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 // Create a pagination links with 10 as the limit and
 // 100 as the total number of items from the result.
@@ -332,7 +332,7 @@ $items = $this->user->get(10, $offset);
 The `$result[0]` returns the computed offset while `$result[1]` returns the generated pagination links:
 
 ``` php
-// application/views/users/index.php
+// ciacme/application/views/users/index.php
 
 <?php echo $links; ?>
 ```
@@ -340,7 +340,7 @@ The `$result[0]` returns the computed offset while `$result[1]` returns the gene
 To configure the pagination library, the `$pagee` property must be defined in the `Model`:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Rougin\Credo\Model;
 use Rougin\Credo\Traits\PaginateTrait;
@@ -375,7 +375,7 @@ class User extends Model
 This trait is used to simplify the specifying of validation rules to a model:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Rougin\Credo\Model;
 use Rougin\Credo\Traits\ValidateTrait;
@@ -391,7 +391,7 @@ class User extends Model
 When used, the `$rules` property of the model must be defined with validation rules that conforms to the `Form Validation` specification:
 
 ``` php
-// application/models/User.php
+// ciacme/application/models/User.php
 
 use Rougin\Credo\Model;
 use Rougin\Credo\Traits\ValidateTrait;
@@ -422,7 +422,7 @@ class User extends Model
 To do a form validation, the `validate` method must be called from the model:
 
 ``` php
-// application/controllers/Welcome.php
+// ciacme/application/controllers/Welcome.php
 
 /** @var array<string, mixed> */
 $input = $this->input->post(null, true);
@@ -433,7 +433,7 @@ $valid = $this->user->validate($input);
 If executed with a view, the validation errors can be automatically be returned to the view using the `form_error` helper:
 
 ``` php
-// application/views/users/create.php
+// ciacme/application/views/users/create.php
 
 <?= form_open('users/create') ?>
   <div>
