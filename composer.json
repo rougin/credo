@@ -1,6 +1,6 @@
 {
   "name": "rougin/credo",
-  "description": "Doctrine ORM wrapper for Codeigniter 3.",
+  "description": "Use Doctrine ORM for Codeigniter 3.",
   "keywords": [ "codeigniter", "credo", "doctrine", "orm" ],
   "homepage": "https://roug.in/credo/",
   "license": "MIT",
@@ -20,10 +20,10 @@
   },
   "require-dev":
   {
-    "phpunit/phpunit": "~4.2|~5.7|~6.0|~7.0|~8.0|~9.0",
     "rougin/codeigniter": "~3.0",
+    "phpunit/phpunit": "*",
     "rougin/spark-plug": "~0.5",
-    "sanmai/phpunit-legacy-adapter": "~6.1|~8.0"
+    "sanmai/phpunit-legacy-adapter": "*"
   },
   "autoload":
   {
@@ -41,6 +41,8 @@
   },
   "scripts":
   {
+    "analyze": "phpstan analyse",
+    "restyle": "php-cs-fixer fix --config=phpstyle.php",
     "test": "phpunit"
   },
   "extra":
