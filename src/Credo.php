@@ -3,9 +3,7 @@
 namespace Rougin\Credo;
 
 use CI_DB_query_builder as Builder;
-use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
 
 /**
  * @method \Doctrine\ORM\EntityRepository             get_repository(string $entityName)
@@ -68,7 +66,7 @@ class Credo
      *
      * @param \CI_DB_query_builder|null $builder
      */
-    public function __construct(Builder $builder = null)
+    public function __construct($builder = null)
     {
         if ($builder)
         {
@@ -147,7 +145,7 @@ class Credo
      *
      * @return \Doctrine\ORM\EntityManager
      */
-    public function newManager($connect, $debug = false, Cache $cache = null, $simple = true)
+    public function newManager($connect, $debug = false, $cache = null, $simple = true)
     {
         $proxies = (string) APPPATH . 'models/proxies';
 
@@ -155,9 +153,25 @@ class Credo
 
         array_push($folders, APPPATH . 'repositories');
 
-        // Set $debug to TRUE to disable caching during development ----------------------------------------
-        $config = Setup::createAnnotationMetadataConfiguration($folders, $debug, $proxies, $cache, $simple);
-        // -------------------------------------------------------------------------------------------------
+        if (class_exists('Doctrine\ORM\Tools\Setup'))
+        {
+            $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+                $folders,
+                $debug,
+                $proxies,
+                $cache,
+                $simple
+            );
+
+            return EntityManager::create($connect, $config);
+        }
+
+        $config = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration(
+            $folders,
+            $debug,
+            $proxies,
+            null
+        );
 
         return EntityManager::create($connect, $config);
     }

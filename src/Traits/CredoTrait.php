@@ -25,7 +25,7 @@ trait CredoTrait
      *
      * @return \Rougin\Credo\Credo
      */
-    public function credo(Credo $credo = null)
+    public function credo($credo = null)
     {
         if ($credo)
         {
