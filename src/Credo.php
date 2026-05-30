@@ -3,7 +3,11 @@
 namespace Rougin\Credo;
 
 use CI_DB_query_builder as Builder;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
+use Doctrine\ORM\Tools\Setup;
 
 /**
  * @method \Doctrine\ORM\EntityRepository             get_repository(string $entityName)
@@ -155,7 +159,7 @@ class Credo
 
         if (class_exists('Doctrine\ORM\Tools\Setup'))
         {
-            $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+            $config = Setup::createAnnotationMetadataConfiguration(
                 $folders,
                 $debug,
                 $proxies,
@@ -166,14 +170,22 @@ class Credo
             return EntityManager::create($connect, $config);
         }
 
-        $config = \Doctrine\ORM\ORMSetup::createAttributeMetadataConfiguration(
-            $folders,
-            $debug,
-            $proxies,
-            null
-        );
+        $config = new Configuration;
+        $config->setProxyDir($proxies);
+        $config->setProxyNamespace('DoctrineProxies');
+        $config->setAutoGenerateProxyClasses($debug);
 
-        return EntityManager::create($connect, $config);
+        $mapper = new AttributeDriver($folders);
+        $config->setMetadataDriverImpl($mapper);
+
+        if (PHP_VERSION_ID >= 80400)
+        {
+            $config->enableNativeLazyObjects(true);
+        }
+
+        $conn = DriverManager::getConnection($connect, $config);
+
+        return new EntityManager($conn, $config);
     }
 
     /**

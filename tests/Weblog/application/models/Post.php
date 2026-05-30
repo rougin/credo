@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
 use Rougin\Credo\Model;
 use Rougin\Credo\Traits\PaginateTrait;
 use Rougin\Credo\Traits\ValidateTrait;
@@ -9,6 +10,8 @@ use Rougin\Credo\Traits\ValidateTrait;
  *
  * @Table(name="post")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'post')]
 class Post extends Model
 {
     use PaginateTrait;
@@ -21,6 +24,9 @@ class Post extends Model
      *
      * @var integer
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer', length: 10, nullable: false)]
     protected $id;
 
     /**
@@ -28,6 +34,7 @@ class Post extends Model
      *
      * @var string
      */
+    #[ORM\Column(name: 'subject', type: 'string', length: 200, nullable: false)]
     protected $subject;
 
     /**
@@ -35,6 +42,7 @@ class Post extends Model
      *
      * @var string
      */
+    #[ORM\Column(name: 'message', type: 'string', length: 2, nullable: false)]
     protected $message;
 
     /**
@@ -42,6 +50,7 @@ class Post extends Model
      *
      * @var string
      */
+    #[ORM\Column(name: 'description', type: 'string', length: 10, nullable: false)]
     protected $description;
 
     /**

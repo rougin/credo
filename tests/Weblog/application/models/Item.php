@@ -1,10 +1,14 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @Entity(repositoryClass="Item_repository")
  *
  * @Table(name="item")
  */
+#[ORM\Entity(repositoryClass: Item_repository::class)]
+#[ORM\Table(name: 'item')]
 class Item extends CI_Model
 {
     /**
@@ -14,6 +18,9 @@ class Item extends CI_Model
      *
      * @var integer
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer', length: 10, nullable: false)]
     protected $id;
 
     /**
@@ -21,6 +28,7 @@ class Item extends CI_Model
      *
      * @var string
      */
+    #[ORM\Column(name: 'name', type: 'string', length: 200, nullable: false)]
     protected $name;
 
     /**
@@ -28,6 +36,7 @@ class Item extends CI_Model
      *
      * @var string
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     protected $created_at;
 
     /**
@@ -35,6 +44,7 @@ class Item extends CI_Model
      *
      * @var string|null
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: true)]
     protected $updated_at = null;
 
     /**
@@ -42,6 +52,7 @@ class Item extends CI_Model
      *
      * @var string|null
      */
+    #[ORM\Column(name: 'deleted_at', type: 'datetime', nullable: true)]
     protected $deleted_at = null;
 
     /**

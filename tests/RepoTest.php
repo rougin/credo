@@ -60,8 +60,10 @@ class RepoTest extends Testcase
 
         $this->item->flush();
 
-        /** @var \Item */
-        $model = $this->item->find(1);
+        /** @var \Item[] */
+        $items = $this->item->findBy(array('name' => 'Credo'));
+
+        $model = $items[0];
 
         $actual = $model->get_name();
 
@@ -69,22 +71,24 @@ class RepoTest extends Testcase
     }
 
     /**
-     * @depends test_update_method
-     *
      * @return void
      */
     public function test_delete_method()
     {
-        /** @var \Item */
-        $result = $this->item->find(1);
-
-        $this->item->delete($result);
+        $this->item->create(array('name' => 'test_delete'), new \Item);
 
         $this->item->flush();
 
-        $result = $this->item->find(1);
+        /** @var \Item[] */
+        $items = $this->item->findBy(array('name' => 'test_delete'));
 
-        $this->assertNull($result);
+        $this->item->delete($items[0]);
+
+        $this->item->flush();
+
+        $items = $this->item->findBy(array('name' => 'test_delete'));
+
+        $this->assertCount(0, $items);
     }
 
     /**
@@ -120,19 +124,25 @@ class RepoTest extends Testcase
      */
     public function test_update_method()
     {
+        $this->item->create(array('name' => 'test_update'), new \Item);
+
+        $this->item->flush();
+
         $data = array('name' => 'Wildfire');
 
         $expected = $data['name'];
 
-        /** @var \Item */
-        $item = $this->item->find(1);
+        /** @var \Item[] */
+        $items = $this->item->findBy(array('name' => 'test_update'));
 
-        $this->item->update($item, $data);
+        $this->item->update($items[0], $data);
 
         $this->item->flush();
 
-        /** @var \Item */
-        $model = $this->item->find(1);
+        /** @var \Item[] */
+        $items = $this->item->findBy(array('name' => 'Wildfire'));
+
+        $model = $items[0];
 
         $actual = $model->get_name();
 

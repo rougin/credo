@@ -45,7 +45,7 @@ class Repository extends EntityRepository
         }
         // ------------------------------------------------------
 
-        $this->_em->persist($entity);
+        $this->getEntityManager()->persist($entity);
     }
 
     /**
@@ -57,7 +57,7 @@ class Repository extends EntityRepository
      */
     public function delete($entity)
     {
-        $this->_em->remove($entity);
+        $this->getEntityManager()->remove($entity);
     }
 
     /**
@@ -121,7 +121,7 @@ class Repository extends EntityRepository
      */
     public function flush()
     {
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -163,7 +163,11 @@ class Repository extends EntityRepository
      */
     public function total()
     {
-        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->count(array());
+        $uow = $this->getEntityManager()->getUnitOfWork();
+
+        $name = $this->getEntityName();
+
+        return $uow->getEntityPersister($name)->count(array());
     }
 
     /**
