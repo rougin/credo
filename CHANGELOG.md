@@ -2,6 +2,14 @@
 
 All notable changes to `Credo` will be documented in this file.
 
+## [0.6.1](https://github.com/rougin/credo/compare/v0.6.0...v0.6.1) - 2026-05-31
+
+### Added
+- Support for PHP `8.4`, `8.5`
+
+### Fixed
+- Usage of `doctrine/orm` at `~3.0`
+
 ## [0.6.0](https://github.com/rougin/credo/compare/v0.5.0...v0.6.0) - 2024-10-22
 
 ### Added
